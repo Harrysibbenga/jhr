@@ -1,10 +1,10 @@
 <template>
-  <div id="hello"></div>
+  <div id="carousel">Carousel comp</div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "Carousel",
   props: {
     msg: String
   }

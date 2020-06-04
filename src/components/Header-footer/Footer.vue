@@ -1,13 +1,10 @@
 <template>
-  <div id="hello"></div>
+  <footer id="footer">Footer</footer>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String
-  }
+  name: "Footer"
 };
 </script>
 
