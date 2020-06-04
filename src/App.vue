@@ -1,10 +1,20 @@
 <template>
   <div id="app">
-    <header></header>
+    <Header></Header>
     <router-view />
-    <footer></footer>
+    <Footer></Footer>
   </div>
 </template>
 
-<style lang="scss">
-</style>
+<script>
+import Header from "@/components/Header-footer/Header";
+import Footer from "@/components/Header-footer/Footer";
+
+export default {
+  components: {
+    Header,
+    Footer,
+  },
+};
+</script>
+<style lang="scss"></style>
