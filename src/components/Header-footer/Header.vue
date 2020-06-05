@@ -8,37 +8,22 @@
         </template>
       </b-navbar-toggle>
 
-      <b-collapse
-        id="navbar-toggle-collapse"
-        is-nav
-        class="order-1 bg-primary border-top border-secondary"
-      >
-        <b-navbar-nav class="align-items-center py-3">
+      <b-collapse id="navbar-toggle-collapse" is-nav class="order-1">
+        <b-navbar-nav class="align-items-center py-3 w-100 position-relative ">
           <transition v-on:before-enter="beforeEnter" v-on:enter="enter" appear>
-            <b-nav-item delay="0" to="about" smleft="280" lgleft class="about"
+            <b-nav-item delay="0" to="about" :left="about" class="about"
               >About</b-nav-item
             >
           </transition>
 
           <transition v-on:before-enter="beforeEnter" v-on:enter="enter" appear>
-            <b-nav-item to="news" delay="2" smleft="410" lgleft class="news"
+            <b-nav-item to="news" delay=".5" :left="news" class="news"
               >News</b-nav-item
             >
           </transition>
 
           <transition v-on:before-enter="beforeEnter" v-on:enter="enter" appear>
-            <b-nav-item to="f3" delay="4" smleft="540" lgleft class="f3"
-              >F3</b-nav-item
-            >
-          </transition>
-
-          <transition v-on:before-enter="beforeEnter" v-on:enter="enter" appear>
-            <b-nav-item
-              to="drivers"
-              delay="6"
-              smleft="660"
-              lgleft
-              class="drivers"
+            <b-nav-item to="drivers" delay="1" :left="drivers" class="drivers"
               >Drivers</b-nav-item
             >
           </transition>
@@ -46,16 +31,25 @@
           <transition v-on:before-enter="beforeEnter" v-on:enter="enter" appear>
             <b-nav-item
               to="simulator"
-              delay="8"
-              smleft="800"
-              lgleft="1000"
+              delay="1.5"
+              :left="simulator"
               class="simulator"
               >Simulator</b-nav-item
             >
           </transition>
+
+          <transition v-on:before-enter="beforeEnter" v-on:enter="enter" appear>
+            <b-nav-item to="f3" delay="2" :left="f3" class="f3">F3</b-nav-item>
+          </transition>
+
+          <transition v-on:before-enter="beforeEnter" v-on:enter="enter" appear>
+            <b-nav-item to="f4" delay="2.5" :left="f4" class="f4"
+              >F4</b-nav-item
+            >
+          </transition>
         </b-navbar-nav>
 
-        <div class="w-100 bg-dark">
+        <div class="w-100 bg-dark d-md-none">
           <div class="text-center pt-3">
             <img
               src="../../assets/jhr.png"
@@ -71,7 +65,7 @@
             </p>
             <div class="container-fluid text-center">
               <div class="row mx-auto py-4">
-                <div class="col-4 pl-1">
+                <div class="col-4">
                   <a href="#" target="_blank">
                     <img
                       src="../../assets/facebook-square-brands-white.png"
@@ -80,7 +74,7 @@
                     />
                   </a>
                 </div>
-                <div class="col-4 px-1">
+                <div class="col-4">
                   <a href="#" target="_blank">
                     <span>
                       <img
@@ -91,7 +85,7 @@
                     </span>
                   </a>
                 </div>
-                <div class="col-4 pr-1">
+                <div class="col-4">
                   <a href="#" target="_blank">
                     <img
                       src="../../assets/twitter-square-brands-white.png"
@@ -106,14 +100,17 @@
         </div>
       </b-collapse>
 
-      <b-navbar-brand to="/" class="order-0">
-        <img
-          src="../../assets/jhr.png"
-          alt="JHR logo"
-          class="img-fluid"
-          width="200px"
-        />
-      </b-navbar-brand>
+      <transition name="slide">
+        <b-navbar-brand to="/" v-if="show" class="order-0">
+          <img
+            src="../../assets/jhr.png"
+            alt="JHR logo"
+            class="img-fluid"
+            width="200px"
+            delay="0"
+          />
+        </b-navbar-brand>
+      </transition>
     </b-navbar>
   </header>
 </template>
@@ -125,12 +122,41 @@ export default {
   data() {
     return {
       windowWidth: 0,
+      about: 0,
+      news: 0,
+      drivers: 0,
+      simulator: 0,
+      f3: 0,
+      f4: 0,
+      show: false,
     };
   },
   name: "Header",
   methods: {
     handleResize() {
       this.windowWidth = window.innerWidth;
+      this.setLeft();
+    },
+    showImage() {
+      this.show = true;
+    },
+    setLeft() {
+      if (this.windowWidth >= 767) {
+        let half = this.windowWidth / 2;
+        let left = half - 200;
+        let right = half - 200;
+        let diff = left / 3;
+
+        // left of logo
+        this.about = diff / 2;
+        this.news = this.about + diff;
+        this.drivers = this.news + diff;
+
+        // right of logo
+        this.simulator = right + this.about;
+        this.f3 = this.simulator + diff;
+        this.f4 = this.f3 + diff;
+      }
     },
     beforeEnter(el) {
       el.style.left = "0";
@@ -138,27 +164,21 @@ export default {
     },
     enter(el, done) {
       let delay = parseInt(el.getAttribute("delay"));
+      let left = parseInt(el.getAttribute("left"));
 
-      if (this.windowWidth >= 1440) {
-        let left = parseInt(el.getAttribute("lgleft"));
-        Velocity(
-          el,
-          { opacity: 1, left },
-          { delay, duration: 2000, complete: done }
-        );
-      } else {
-        let left = parseInt(el.getAttribute("smleft"));
-        Velocity(
-          el,
-          { opacity: 1, left },
-          { delay, duration: 2000, complete: done }
-        );
-      }
+      Velocity(
+        el,
+        { opacity: 1, left },
+        { delay, duration: 2000, complete: done }
+      );
     },
   },
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+  },
+  mounted() {
+    this.showImage();
   },
 };
 </script>
@@ -182,6 +202,37 @@ ul {
   }
 }
 
+@media (max-width: 767px) {
+  #navbar-toggle-collapse {
+    border-top: 0.25rem solid #6e6e6d;
+    background-color: #e4e4e4;
+  }
+}
+
 @media (min-width: 768px) {
+  #navbar-toggle-collapse {
+    position: absolute;
+    width: 100%;
+    margin-bottom: 100px;
+    li {
+      position: relative;
+    }
+  }
+  .navbar-brand {
+    margin-bottom: 150px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+.slide-enter-active {
+  transition: all 2s ease;
+}
+.slide-leave-active {
+  transition: all 2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-enter, .slide-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-100px);
+  opacity: 0;
 }
 </style>
