@@ -63,6 +63,14 @@
               <br />Dronfield <br />Derbyshire <br />S18 2XR
               <br />
             </p>
+            <p class="text-secondary">
+              <span class="text-white">Phone:</span> 07803 669 894
+            </p>
+
+            <p class="text-secondary">
+              <span class="text-white">Email:</span>
+              enquiries@jhrdevelopments.com
+            </p>
             <div class="container-fluid text-center">
               <div class="row mx-auto py-4">
                 <div class="col-4">
@@ -148,7 +156,7 @@ export default {
         let diff = left / 3;
 
         // left of logo
-        this.about = diff / 2;
+        this.about = diff / 2 - 20;
         this.news = this.about + diff;
         this.drivers = this.news + diff;
 
