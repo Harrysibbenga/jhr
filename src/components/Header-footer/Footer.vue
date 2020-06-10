@@ -1,11 +1,11 @@
 <template>
   <footer id="footer" class="bg-dark pb-5">
     <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-6 text-center pt-3">
-          <img src="../../assets/jhr.png" alt="JHR logo" class="img-fluid mt-5 mb-4" width="400px" />
+      <div class="row pt-3">
+        <div class="col-12 col-md-6 text-center pt-2">
+          <img src="../../assets/jhr.png" alt="JHR logo" class="img-fluid mt-5 mb-4" width="300px" />
         </div>
-        <div class="text-center pt-3 col-12 col-md-6">
+        <div class="text-center pt-2 col-12 col-md-6">
           <h3 class="text-white">Contact</h3>
           <p class="text-secondary">
             Steven Hunter
@@ -24,33 +24,33 @@
           <p class="text-secondary">
             <span class="text-white">Email:</span> enquiries@jhrdevelopments.com
           </p>
-          <div class="row mx-auto p-5">
-            <div class="col-4 p-0">
+          <div class="d-flex flex-row px-5 pt-3 justify-content-center">
+            <div class="p-2">
               <a href="#" target="_blank">
                 <img
                   src="../../assets/facebook-square-brands-white.png"
                   class="img-fluid"
-                  width="50px"
+                  width="35px"
                 />
               </a>
             </div>
-            <div class="col-4 p-0">
+            <div class="p-2">
               <a href="#" target="_blank">
                 <span>
                   <img
                     src="../../assets/instagram-square-brands-white.png"
                     class="img-fluid"
-                    width="50px"
+                    width="35px"
                   />
                 </span>
               </a>
             </div>
-            <div class="col-4 p-0">
+            <div class="p-2">
               <a href="#" target="_blank">
                 <img
                   src="../../assets/twitter-square-brands-white.png"
                   class="img-fluid"
-                  width="50px"
+                  width="35px"
                 />
               </a>
             </div>
