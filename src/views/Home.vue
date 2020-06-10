@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <Header></Header>
-    <carousel></carousel>
+    <carousel class="position-relative"></carousel>
     <latest></latest>
     <calendar></calendar>
   </div>

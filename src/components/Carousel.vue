@@ -1,5 +1,5 @@
 <template>
-  <div id="carousel">
+  <div id="carousel" class="position-relative">
     <b-carousel
       id="carousel-fade"
       style="text-shadow: 0px 0px 2px #000"
@@ -11,7 +11,7 @@
       <b-carousel-slide caption="Second Slide" img-src="https://picsum.photos/1024/480/?image=12"></b-carousel-slide>
       <b-carousel-slide caption="Third Slide" img-src="https://picsum.photos/1024/480/?image=22"></b-carousel-slide>
     </b-carousel>
-    <div v-if="upcomingEvent">
+    <div v-if="upcomingEvent" class="timer">
       <timer :deadline="upcomingEvent"></timer>
     </div>
   </div>
@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      upcomingEvent: ""
+      upcomingEvent: "07/07/2020"
     };
   },
   components: {
@@ -38,9 +38,11 @@ export default {
 </script>
 
 <style scoped>
-.position-absolute {
-  top: 0;
-  left: 80vw;
-  z-index: 2;
+@media (min-width: 768px) {
+  .timer {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+  }
 }
 </style>

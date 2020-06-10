@@ -1,18 +1,21 @@
 <template>
   <div>
-    <div v-if="currentTime" class="text-center">
-      <div class="bg-dark text-white">
-        <div class="d-inline-block">
+    <div v-if="currentTime" class="timer bg-dark text-white">
+      <div class="d-flex justify-content-around">
+        <div class="align-self-center">
+          <span>
+            <img src="../assets/satellite-dish-solid.png" width="20px" height="20px" />
+          </span>
+        </div>
+        <div class="align-self-center text-center">
+          <span>{{day}}&nbsp;</span>
+          <span>{{month}}</span>,
+          <span>{{year}}</span>
           <p>
-            <span>{{day}}&nbsp;</span>
-            <span>{{month}}</span>,
-            <span>{{year}}</span>
-          </p>
-          <p>
-            Event live in
-            <span v-if="days">{{ days }}d :</span>
-            <span v-if="hours">{{ hours | formatTime }}h :</span>
-            <span>{{ minutes | formatTime }}m :{{ seconds | formatTime }}s</span>
+            Event live
+            <span v-if="days">{{ days }} :</span>
+            <span v-if="hours">{{ hours | formatTime }} :</span>
+            <span>{{ minutes | formatTime }} :{{ seconds | formatTime }}</span>
           </p>
         </div>
       </div>
@@ -101,3 +104,9 @@ export default {
   }
 };
 </script>
+
+<style lang="css">
+.timer {
+  width: 320px;
+}
+</style>
