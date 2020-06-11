@@ -68,7 +68,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.col-4 {
+.d-flex {
   img:hover {
     background-color: red;
     transform: scale(1.2);
