@@ -130,6 +130,10 @@ export default {
   }
 }
 
+.router-link-active {
+  color: red !important;
+}
+
 ul {
   li a {
     font-size: 1.2rem;
