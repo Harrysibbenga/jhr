@@ -6,6 +6,12 @@ $theme-colors: ("primary": #e4e4e4,
 
 $border-width: .25rem;
 
+$link-hover-color: red;
+
+.nav-link:hover {
+    color: red;
+}
+
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
 // custom scss
@@ -19,7 +25,8 @@ h1 {
     font-style: normal;
 }
 
-h2 {
+h2,
+h5 {
     font-family: trilby,
         serif;
     font-weight: 400;
@@ -27,8 +34,7 @@ h2 {
 }
 
 h3,
-h4,
-h5 {
+h4 {
     font-family: sweet-sans-pro,
         sans-serif;
     font-weight: 700;
