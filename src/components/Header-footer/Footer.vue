@@ -1,7 +1,7 @@
 <template>
-  <footer id="footer" class="bg-dark pb-5">
+  <footer id="footer" class="bg-dark pb-5 mt-5">
     <div class="container">
-      <div class="row pt-3">
+      <div class="row pt-5">
         <div class="col-12 col-md-6 text-center pt-2">
           <img src="../../assets/jhr.png" alt="JHR logo" class="img-fluid mt-5 mb-4" width="300px" />
         </div>
