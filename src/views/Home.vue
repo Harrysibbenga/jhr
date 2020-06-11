@@ -1,6 +1,5 @@
 <template>
   <div id="home">
-    <Header></Header>
     <carousel class="position-relative"></carousel>
     <latest></latest>
     <calendar></calendar>
@@ -12,15 +11,13 @@
 import Carousel from "@/components/Carousel.vue";
 import Latest from "@/components/Latest.vue";
 import Calendar from "@/components/Calendar.vue";
-import Header from "@/components/Header-footer/Header";
 
 export default {
   name: "Home",
   components: {
     Carousel,
     Latest,
-    Calendar,
-    Header
+    Calendar
   }
 };
 </script>
