@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <loader></loader>
     <Header></Header>
     <router-view />
     <Footer></Footer>
@@ -13,8 +14,7 @@ import Header from "@/components/Header-footer/Header";
 export default {
   components: {
     Footer,
-    Header
-  }
+    Header,
+  },
 };
 </script>
-<style lang="scss"></style>
