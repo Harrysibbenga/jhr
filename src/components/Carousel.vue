@@ -1,16 +1,6 @@
 <template>
-  <div id="carousel" class="position-relative">
-    <b-carousel
-      id="carousel-fade"
-      style="text-shadow: 0px 0px 2px #000"
-      fade
-      indicators
-      class="d-none d-md-block"
-    >
-      <b-carousel-slide caption="First slide" img-src="https://picsum.photos/1024/480/?image=10"></b-carousel-slide>
-      <b-carousel-slide caption="Second Slide" img-src="https://picsum.photos/1024/480/?image=12"></b-carousel-slide>
-      <b-carousel-slide caption="Third Slide" img-src="https://picsum.photos/1024/480/?image=22"></b-carousel-slide>
-    </b-carousel>
+  <div id="carousel-section" class="position-relative">
+    <mdb-carousel :items="items" :interval="4000" controlls class="d-none d-md-block"></mdb-carousel>
     <div v-if="upcomingEvent" class="timer">
       <timer :deadline="upcomingEvent"></timer>
     </div>
@@ -18,6 +8,7 @@
 </template>
 
 <script>
+import { mdbCarousel } from "mdbvue";
 import Timer from "./Timer";
 
 export default {
@@ -27,13 +18,27 @@ export default {
   },
   data() {
     return {
-      upcomingEvent: "07/07/2020"
+      upcomingEvent: "07/07/2020",
+      items: [
+        {
+          img: true,
+          src: "https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg"
+        },
+        {
+          img: true,
+          src: "https://mdbootstrap.com/img/Photos/Slides/img%20(16).jpg"
+        },
+        {
+          img: true,
+          src: "https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg"
+        }
+      ]
     };
   },
   components: {
-    Timer
-  },
-  methods: {}
+    Timer,
+    mdbCarousel
+  }
 };
 </script>
 
