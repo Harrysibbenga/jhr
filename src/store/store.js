@@ -1,15 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import admin from "./Modules/admin"
-import posts from "./Modules/posts"
-import calendars from "./Modules/calendars"
-import carousel from "./Modules/carousel"
+import Vue from "vue";
+import Vuex from "vuex";
+import posts from "./Modules/posts";
+import calendars from "./Modules/calendars";
+import carousel from "./Modules/carousel";
+import global from "./Modules/global";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-    admin,
+  modules: {
     posts,
     calendars,
-    carousel
-})
+    carousel,
+    global,
+  },
+});
