@@ -1,6 +1,6 @@
 <template>
   <header id="header" class="mx-auto">
-    <b-navbar toggleable="md" type="light" variant="light" class="p-0">
+    <b-navbar toggleable="md" class="p-0 bg-white">
       <b-navbar-toggle target="navbar-toggle-collapse" class="ml-4">
         <template v-slot:default="{ expanded }">
           <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>

@@ -1,20 +1,21 @@
 <template>
-  <footer id="footer" class="bg-dark pb-5 mt-5">
+  <footer id="footer" class="bg-dark pb-5 mt-5 bottom">
     <div class="container">
       <div class="row pt-5">
         <div class="col-12 col-md-6 text-center pt-2">
-          <img src="../../assets/jhr.png" alt="JHR logo" class="img-fluid mt-5 mb-4" width="300px" />
+          <img
+            src="../../assets/jhr.png"
+            alt="JHR logo"
+            class="img-fluid mt-5 mb-4"
+            width="300px"
+          />
         </div>
         <div class="text-center pt-2 col-12 col-md-6">
           <h3 class="text-white">Contact</h3>
           <p class="text-secondary">
             Steven Hunter
-            <br />JHR Developments
-            <br />Hunter Park
-            <br />Callywhite Lane
-            <br />Dronfield
-            <br />Derbyshire
-            <br />S18 2XR
+            <br />JHR Developments <br />Hunter Park <br />Callywhite Lane
+            <br />Dronfield <br />Derbyshire <br />S18 2XR
             <br />
           </p>
           <p class="text-secondary">
@@ -63,7 +64,7 @@
 
 <script>
 export default {
-  name: "Footer"
+  name: "Footer",
 };
 </script>
 
