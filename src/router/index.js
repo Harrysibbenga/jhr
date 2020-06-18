@@ -2,13 +2,17 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
+import News from "../views/News.vue";
+import Post from "../views/Post.vue";
 import Login from "../views/Login.vue";
 import Dashboard from "../views/Dashboard.vue";
+import Simulator from "../views/Simulator.vue"
 import Welcome from "@/components/Dashboard/Welcome";
 import Calenders from "@/components/Dashboard/Calenders";
 import Posts from "@/components/Dashboard/Posts";
 import Formula_3 from "@/components/Dashboard/Formula3";
 import Formula_4 from "@/components/Dashboard/Formula4";
+
 
 import {
   auth
@@ -21,17 +25,31 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes: [{
       path: "/",
-      name: "Home",
+      name: "home",
       component: Home,
     },
     {
       path: "/about",
-      name: "About",
+      name: "about",
       component: About,
     },
     {
+      path: "/news",
+      name: "news",
+      component: News,
+    },
+    {
+      path: "/simulator",
+      name: "simulator",
+      component: Simulator,
+    }, {
+      path: "/post/:slug",
+      name: "post",
+      component: Post,
+    },
+    {
       path: "/login",
-      name: "Login",
+      name: "login",
       component: Login,
     },
     {
