@@ -1,10 +1,13 @@
-import { postsCollection } from "../../../firebase";
+import {
+  postsCollection
+} from "../../../firebase";
 
 const posts = {
   namespaced: true,
   state: {
     allPosts: [],
     post: null,
+    postsByYear: []
   },
   mutations: {
     setPosts(state, val) {
@@ -12,6 +15,13 @@ const posts = {
         state.allPosts = val;
       } else {
         state.allPosts = [];
+      }
+    },
+    setPostsByYear(state, val) {
+      if (val) {
+        state.postsByYear = val;
+      } else {
+        state.postsByYear = [];
       }
     },
     setPost(state, val) {
@@ -29,7 +39,9 @@ const posts = {
     },
   },
   actions: {
-    setPost({ commit }, id) {
+    setPost({
+      commit
+    }, id) {
       postsCollection
         .doc(id)
         .get()
@@ -38,7 +50,9 @@ const posts = {
           commit("setPost", post);
         });
     },
-    setPosts({ commit }) {
+    setPosts({
+      commit
+    }) {
       postsCollection.orderBy("date", "desc").onSnapshot((querySnapshot) => {
         let postsArray = [];
 
@@ -50,6 +64,20 @@ const posts = {
         commit("setPosts", postsArray);
       });
     },
+    setPostsByYear({
+      commit
+    }, year) {
+      postsCollection.where('year', "==", year).orderBy('date', 'desc').onSnapshot((doc => {
+        let postsArray = [];
+
+        doc.forEach((doc) => {
+          let post = doc.data();
+          post.id = doc.id;
+          postsArray.push(post);
+        });
+        commit("setPostsByYear", postsArray);
+      }))
+    }
   },
   getters: {
     getPost(state) {
@@ -58,6 +86,9 @@ const posts = {
     getPosts(state) {
       return state.allPosts;
     },
+    getPostsByYear(state) {
+      return state.postsByYear;
+    }
   },
 };
 
