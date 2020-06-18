@@ -8,18 +8,18 @@
         </template>
       </b-navbar-toggle>
 
-      <b-navbar-brand to="/" v-if="slideDown" class="d-md-none">
+      <b-navbar-brand to="/home" v-if="slideDown" class="d-md-none">
         <img src="../../assets/jhr.png" alt="JHR logo" class="img-fluid" width="200px" />
       </b-navbar-brand>
 
       <b-collapse id="navbar-toggle-collapse" is-nav class="d-md-flex justify-content-md-between">
         <transition name="slide-left">
           <b-navbar-nav class="d-md-flex justify-content-md-around text-center" v-if="slideLeft">
-            <b-nav-item to="about" class="about">About</b-nav-item>
+            <b-nav-item to="/about" class="about">About</b-nav-item>
 
-            <b-nav-item to="news" class="news">News</b-nav-item>
+            <b-nav-item to="/news" class="news">News</b-nav-item>
 
-            <b-nav-item to="drivers" class="drivers">Drivers</b-nav-item>
+            <b-nav-item to="/drivers" class="drivers">Drivers</b-nav-item>
           </b-navbar-nav>
         </transition>
 
@@ -31,11 +31,11 @@
 
         <transition name="slide-right">
           <b-navbar-nav class="d-md-flex justify-content-md-around text-center" v-if="slideRight">
-            <b-nav-item to="simulator" class="simulator">Simulator</b-nav-item>
+            <b-nav-item to="/simulator" class="simulator">Simulator</b-nav-item>
 
-            <b-nav-item to="f3" class="f3">F3</b-nav-item>
+            <b-nav-item to="/f3" class="f3">F3</b-nav-item>
 
-            <b-nav-item to="f4" class="f4">F4</b-nav-item>
+            <b-nav-item to="/f4" class="f4">F4</b-nav-item>
           </b-navbar-nav>
         </transition>
 

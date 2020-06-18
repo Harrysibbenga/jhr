@@ -9,6 +9,7 @@ import store from "./store/store";
 import vuelidate from "vuelidate";
 import Loader from "@/components/Loader";
 import Contact from "@/components/Contact";
+import Header from "@/components/Header-footer/Header";
 import {
   BIcon,
   IconsPlugin,
@@ -27,6 +28,7 @@ import {
 Vue.use(vuelidate);
 Vue.component("loader", Loader);
 Vue.component("contact", Contact);
+Vue.component("Header", Header);
 Vue.config.productionTip = false;
 
 let app;

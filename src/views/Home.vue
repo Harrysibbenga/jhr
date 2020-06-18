@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <Header></Header>
     <carousel class="position-relative"></carousel>
     <latest></latest>
     <calendar></calendar>
@@ -22,9 +23,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* header {
-  z-index: 2;
-  color: white !important;
-} */
-</style>
+<style scoped></style>
