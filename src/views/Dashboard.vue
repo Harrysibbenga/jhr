@@ -1,31 +1,58 @@
 <template>
-  <div class="container-fluid">
-    <b-nav tabs>
-      <b-nav-item to="/">Home</b-nav-item>
-      <b-nav-item to="/dashboard/posts/">Posts</b-nav-item>
-      <b-nav-item to="/dashboard/calenders/">Calenders</b-nav-item>
-      <b-nav-item @click="logout">Logout</b-nav-item>
-    </b-nav>
-    <router-view></router-view>
+  <div>
+    <div class="container">
+      <div class="my-4">
+        <router-link to="/">
+          <mdb-icon icon="arrow-left" />&nbsp; Home
+        </router-link>
+        <hr />
+      </div>
+      <b-nav tabs>
+        <b-nav-item to="/dashboard/posts/">Posts</b-nav-item>
+        <b-nav-item to="/dashboard/calenders/">Calenders</b-nav-item>
+        <b-nav-item to="/dashboard/carousel/">Carousel</b-nav-item>
+        <b-nav-item @click="logout">Logout</b-nav-item>
+      </b-nav>
+    </div>
+    <router-view class="pt-3"></router-view>
   </div>
 </template>
 
 <script>
-// import { auth } from "../../firebaseConfig";
+import { auth } from "../../firebase";
+import { mdbIcon } from "mdbvue";
 
 export default {
-  computed: {
-    currentUser() {
-      return this.$store.getters["admin/currentUser"];
+  methods: {
+    logout() {
+      auth.signOut().then(() => {
+        this.$router.push("/");
+      });
     }
   },
-  methods: {
-    // logout() {
-    //   auth.signOut().then(() => {
-    //     this.$store.dispatch("admin/clearData");
-    //     this.$router.push("/");
-    //   });
-    // }
+  components: {
+    mdbIcon
   }
 };
 </script>
+
+<style>
+.nav-link {
+  color: black;
+}
+.nav-tabs {
+  border-bottom: 0.25rem solid black;
+}
+.nav-tabs .nav-link:focus {
+  border-color: black;
+}
+.nav-tabs .nav-link:hover {
+  border-color: red;
+}
+a {
+  color: black;
+}
+a:hover {
+  color: red;
+}
+</style>

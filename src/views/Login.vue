@@ -1,83 +1,78 @@
 <template>
   <div class="container pt-5">
+    <div class="mb-5">
+      <router-link to="/">
+        <mdb-icon icon="arrow-left" />&nbsp; Home
+      </router-link>
+      <hr />
+    </div>
+
     <transition name="fade">
       <loader :show="performingRequest"></loader>
     </transition>
 
-    <b-form v-if="showLoginForm" @submit.prevent>
-      <h1 class="text-left">Login</h1>
-      <b-form-group id="email" label="Email address: " label-for="email">
-        <b-input
-          id="email"
-          v-model.trim="formdata.email"
+    <form v-if="!showForgotPassword" @submit.prevent>
+      <p class="h4 text-center mb-4">Sign in</p>
+      <div class="grey-text">
+        <mdb-input
+          label="Your email"
+          icon="envelope"
           type="email"
+          v-model.trim="formdata.email"
           required
-          placeholder="you@email.com"
-          :class="{ invalid: $v.formdata.email.$error }"
-          @blur="$v.formdata.email.$touch()"
-        ></b-input>
-        <div class v-if="$v.formdata.email.$error">
-          <p class="error-lablel" v-if="!$v.formdata.email.required">
-            This field is required
-          </p>
-          <p class="error-lablel" v-if="!$v.formdata.email.email">
-            Please enter a valid email
-          </p>
-        </div>
-      </b-form-group>
-      <b-form-group id="password" label="Password: " label-for="password">
-        <b-input
-          v-model.trim="formdata.password"
+        />
+        <mdb-input
+          label="Your password"
+          icon="lock"
           type="password"
-          id="password"
+          v-model.trim="formdata.password"
           required
-          placeholder="Enter Password"
-          aria-describedby="password-help-block"
-          @blur="$v.formdata.password.$touch()"
-          :class="{ invalid: $v.formdata.password.$error }"
-        ></b-input>
-        <div v-if="$v.formdata.password.$error">
-          <p class="error-lablel" v-if="!$v.formdata.password.required">
-            This field is required
-          </p>
-          <p class="error-lablel" v-if="!$v.formdata.password.minLength">
-            At Least 4 characters
-          </p>
-        </div>
-      </b-form-group>
-      <button @click="login" class="btn">Login</button>
-      <a @click="togglePasswordReset" class="text-dark pl-4">Forgot Password</a>
-    </b-form>
+        />
+      </div>
+      <div class="text-center">
+        <mdb-btn @click="login" color="secondary">Login</mdb-btn>
+        <a @click="togglePasswordReset" class="text-dark pl-4"
+          >Forgot Password</a
+        >
+      </div>
+    </form>
 
-    <b-form v-if="showForgotPassword" @submit.prevent class="password-reset">
+    <form v-if="showForgotPassword" @submit.prevent>
       <div v-if="!passwordResetSuccess">
-        <h1>Reset Password</h1>
-        <p>We will send you an email to reset your password</p>
+        <p class="h4 text-center">Reset Password</p>
+        <p class="text-center">
+          We will send you an email to reset your password
+        </p>
 
-        <b-form-group id="email3" label="Email: " label-for="email3">
-          <b-input
-            v-model.trim="passwordForm.email"
-            type="text"
-            id="email3"
-            required
-            placeholder="you@email.com"
-          ></b-input>
-        </b-form-group>
+        <mdb-input
+          label="Your email"
+          icon="envelope"
+          type="email"
+          v-model.trim="passwordForm.email"
+          required
+        />
 
-        <button @click="resetPassword" class="btn">Submit</button>
-
-        <a @click="toggleForm" class="text-dark pl-4">Back to Log In</a>
+        <div class="text-center">
+          <mdb-btn @click="resetPassword" color="secondary">Submit</mdb-btn>
+          <a @click="toggleForm" class="text-dark pl-4">Back to Log In</a>
+        </div>
       </div>
       <div v-else>
-        <h1>Email Sent</h1>
-        <p>check your email for a link to reset your password</p>
-        <a @click="toggleForm" class="text-dark">Back to Log In</a>
+        <div class="text-center">
+          <h1>Email Sent</h1>
+          <p>check your email for a link to reset your password</p>
+          <a @click="toggleForm" class="text-dark">Back to Log In</a>
+        </div>
       </div>
-    </b-form>
+    </form>
 
     <transition name="fade">
-      <div v-if="errorMsg !== ''" class="error-msg">
-        <p>{{ errorMsg }}</p>
+      <div
+        v-if="msg.message != ''"
+        :class="`bg-${msg.type}`"
+        class="pl-5 mt-2 text-white text-center"
+      >
+        <p>{{ msg.message }}</p>
       </div>
     </transition>
   </div>
@@ -85,6 +80,7 @@
 
 <script>
 import { required, email, minLength } from "vuelidate/lib/validators";
+import { mdbInput, mdbBtn, mdbIcon } from "mdbvue";
 import { auth } from "../../firebase";
 
 export default {
@@ -101,7 +97,7 @@ export default {
       showForgotPassword: false,
       passwordResetSuccess: false,
       performingRequest: false,
-      errorMsg: "",
+      msg: "",
     };
   },
   validations: {
@@ -115,6 +111,11 @@ export default {
         minLength: minLength(6),
       },
     },
+  },
+  components: {
+    mdbInput,
+    mdbBtn,
+    mdbIcon,
   },
   methods: {
     toggleForm() {
@@ -145,7 +146,16 @@ export default {
         })
         .catch((err) => {
           this.performingRequest = false;
-          this.errorMsg = err.message;
+          this.msg = {
+            type: "warning",
+            message: err.message,
+          };
+          setTimeout(() => {
+            this.msg = {
+              type: "",
+              message: "",
+            };
+          }, 2000);
         });
     },
     resetPassword() {
@@ -160,6 +170,9 @@ export default {
         .catch((err) => {
           this.performingRequest = false;
           this.errorMsg = err.message;
+          setTimeout(() => {
+            this.errorMsg = "";
+          }, 2000);
         });
     },
   },
@@ -167,7 +180,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.form-control.invalid {
-  border: red 1.5px solid !important;
+a {
+  color: black;
+}
+a:hover {
+  color: red;
 }
 </style>
