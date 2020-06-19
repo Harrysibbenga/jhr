@@ -50,6 +50,20 @@ const posts = {
           commit("setPost", post);
         });
     },
+    setPostSlug({
+      commit
+    }, slug) {
+      postsCollection
+        .where("slug", "==", slug)
+        .onSnapshot((doc => {
+
+          doc.forEach((doc) => {
+            let post = doc.data();
+            post.id = doc.id;
+            commit("setPost", post);
+          });
+        }));
+    },
     setPosts({
       commit
     }) {
