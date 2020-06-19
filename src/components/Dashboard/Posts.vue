@@ -18,7 +18,7 @@
 
           <img
             v-else
-            src="../../assets/img-placeholder.png"
+            :src="defaultImage"
             alt="Placeholder image"
             class="img-fluid"
           />
@@ -26,7 +26,7 @@
         <form @submit.prevent="submitForm" class="p-2 pt-5">
           <div class="row">
             <div class="md-form col-4 p-0">
-              <mdb-btn color="primary" inline @click="uploadImage = true"
+              <mdb-btn color="primary" inline @click="newImage"
                 >Headline Image</mdb-btn
               >
             </div>
@@ -128,6 +128,8 @@
             class="img-fluid"
           />
 
+          <mdb-btn @click="changeImage" color="primary">Change image</mdb-btn>
+
           <div class="md-form col-md-6 col-lg-4 p-0">
             <mdb-input type="date" inline v-model.trim="clickedPost.date" />
           </div>
@@ -207,7 +209,7 @@
     </mdb-modal>
 
     <!-- uploadImage -->
-    <mdb-modal size="md" :show="uploadImage" @close="uploadImage = false">
+    <mdb-modal size="md" :show="uploadImage" @close="closeImageUpload">
       <mdb-modal-header>
         <mdb-modal-title>Upload image</mdb-modal-title>
       </mdb-modal-header>
@@ -248,14 +250,14 @@
         </div>
       </mdb-modal-body>
       <mdb-modal-footer>
-        <mdb-btn color="secondary" size="sm" @click.native="uploadImage = false"
+        <mdb-btn color="secondary" size="sm" @click.native="closeImageUpload"
           >Close</mdb-btn
         >
         <mdb-btn
           color="primary"
           size="sm"
           :disabled="img.alt == ''"
-          @click="saveFile"
+          @click="saveFile(type)"
           >Save</mdb-btn
         >
       </mdb-modal-footer>
@@ -331,6 +333,9 @@ export default {
         alt: "",
       },
       confirmUpdate: false,
+      type: "",
+      defaultImage:
+        "https://firebasestorage.googleapis.com/v0/b/jhr-developments-c5bba.appspot.com/o/images%2Fimg-placeholder.png?alt=media&token=7d9c5978-d45d-4049-91d9-ceb235823db7",
     };
   },
   props: {
@@ -416,6 +421,10 @@ export default {
 
       this.post.slug = newSlug.join("-") + "-" + date;
 
+      if (this.post.url == "") {
+        this.post.url = this.defaultImage;
+      }
+
       postsCollection
         .add({
           title: this.post.title,
@@ -455,6 +464,10 @@ export default {
           }, 2000);
         });
     },
+    newImage() {
+      this.uploadImage = true;
+      this.type = "new";
+    },
     checkFile(event) {
       this.file = event.target.files[0];
       imageCollection
@@ -473,31 +486,68 @@ export default {
         });
     },
     saveFile() {
-      let payload = {};
-      payload.file = this.file;
-      payload.alt = this.img.alt;
-      this.$store.dispatch("images/uploadImage", payload);
-      setTimeout(() => {
-        this.img.content = this.updatedImage;
-        this.post.imgId = this.img.content.id;
-        this.post.url = this.img.content.url;
-        this.file.name = "";
-        this.uploadImage = false;
-      }, 2000);
+      if (this.type == "new") {
+        let payload = {};
+        payload.file = this.file;
+        payload.alt = this.img.alt;
+        this.$store.dispatch("images/uploadImage", payload);
+        setTimeout(() => {
+          this.img.content = this.updatedImage;
+          this.post.imgId = this.img.content.id;
+          this.post.url = this.img.content.url;
+          this.uploadImage = false;
+          this.type = "";
+          this.file.name = "";
+        }, 2000);
+      } else if (this.type == "edit") {
+        let payload = {};
+        payload.file = this.file;
+        payload.alt = this.img.alt;
+        this.img.alt = "";
+        this.$store.dispatch("images/uploadImage", payload);
+        setTimeout(() => {
+          this.img.content = this.updatedImage;
+          this.clickedPost.imgId = this.img.content.id;
+          this.clickedPost.url = this.img.content.url;
+          this.uploadImage = false;
+          this.type = "";
+          this.file = "";
+          this.img.alt = "";
+        }, 2000);
+      }
+    },
+    closeImageUpload() {
+      this.uploadImage = false;
+      this.type = "";
+      this.file = "";
+      this.img.alt = "";
     },
     confirmUse() {
-      this.post.imgId = this.img.id;
-      this.existsModal = false;
-      this.post.url = this.img.content.url;
-      this.img.alt = this.img.content.alt;
-      this.file.name = "";
+      if (this.type == "new") {
+        this.post.imgId = this.img.id;
+        this.existsModal = false;
+        this.post.url = this.img.content.url;
+        this.img.alt = this.img.content.alt;
+        this.type = "";
+        this.file = "";
+        this.img.alt = "";
+      } else if (this.type == "edit") {
+        this.clickedPost.imgId = this.img.id;
+        this.existsModal = false;
+        this.clickedPost.url = this.img.content.url;
+        this.img.alt = this.img.content.alt;
+        this.type = "";
+        this.file = "";
+        this.img.alt = "";
+      }
     },
     declineUse() {
       this.existsModal = false;
-      this.post.url = "";
+      this.img.content = "";
+      this.img.id = "";
+      this.type = "";
+      this.file = "";
       this.img.alt = "";
-      this.post.imgId = "";
-      this.file.name = "";
     },
     submitForm() {
       this.addPost();
@@ -578,6 +628,10 @@ export default {
         imgId: "",
       };
       this.editModal = false;
+    },
+    changeImage() {
+      this.uploadImage = true;
+      this.type = "edit";
     },
     saveEdit() {
       let slugArry = [],
