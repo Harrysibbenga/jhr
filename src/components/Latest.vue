@@ -4,41 +4,33 @@
       <div class="row overflow-hidden">
         <div class="col-md-6 mt-1 p-0 main overflow-hidden">
           <div class="view overlay main-content px-1 zoom overflow-hidden">
-            <img
-              src="../assets/F4/2 - Donington Park/4ed8bab2-51a0-4df3-aae5-9d570abbe4af.jpg"
-              alt
-              class="main-img"
-            />
-            <div class="mask rgba-black-strong d-flex flex-column justify-content-end pb-5 pl-5">
-              <h2 class="text-white">Headline</h2>
-              <p class="text-white">2 Jan 2020</p>
-              <router-link to="/" class="text-danger">More info</router-link>
+            <img :src="latestPost.url" :alt="latestPost.alt" class="main-img" />
+            <div
+              class="mask rgba-black-strong d-flex flex-column justify-content-end pb-5 pl-5"
+            >
+              <h2 class="text-white">{{ latestPost.title }}</h2>
+              <p class="text-white">{{ latestPost.date | formatDate }}</p>
+              <router-link :to="`/post/${latestPost.slug}`" class="text-danger"
+                >More info</router-link
+              >
             </div>
           </div>
         </div>
         <div class="col-md-6 p-0 px-1 d-flex flex-column">
-          <div class="mt-1 view overlay zoom">
-            <img
-              src="../assets/F4/2 - Donington Park/4ed8bab2-51a0-4df3-aae5-9d570abbe4af.jpg"
-              alt
-              class="img-fluid"
-            />
-            <div class="mask rgba-black-strong d-flex flex-column justify-content-end pb-5 pl-5">
-              <h2 class="text-white">Headline</h2>
-              <p class="text-white">2 Jan 2020</p>
-              <router-link to="/" class="text-danger">More info</router-link>
-            </div>
-          </div>
-          <div class="mt-1 view overlay zoom">
-            <img
-              src="../assets/F4/2 - Donington Park/4ed8bab2-51a0-4df3-aae5-9d570abbe4af.jpg"
-              alt
-              class="img-fluid"
-            />
-            <div class="mask rgba-black-strong d-flex flex-column justify-content-end pb-5 pl-5">
-              <h2 class="text-white">Headline</h2>
-              <p class="text-white">2 Jan 2020</p>
-              <router-link to="/" class="text-danger">More info</router-link>
+          <div
+            class="mt-1 view overlay zoom"
+            v-for="(post, index) in posts"
+            :key="index"
+          >
+            <img :src="post.url" :alt="post.alt" class="img-fluid" />
+            <div
+              class="mask rgba-black-strong d-flex flex-column justify-content-end pb-5 pl-5"
+            >
+              <h2 class="text-white">{{ post.title }}</h2>
+              <p class="text-white">{{ post.date | formatDate }}</p>
+              <router-link :to="`/post/${post.slug}`" class="text-danger"
+                >More info</router-link
+              >
             </div>
           </div>
         </div>
@@ -48,8 +40,27 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
-  name: "Latest"
+  name: "Latest",
+
+  computed: {
+    latestPost() {
+      return this.$store.getters["posts/getPosts"][0];
+    },
+    posts() {
+      return this.$store.getters["posts/getPosts"].slice(1, 3);
+    },
+  },
+  filters: {
+    formatDate(val) {
+      if (!val) {
+        return "-";
+      }
+      let date = val;
+      return moment(date).format("Do MMM YYYY");
+    },
+  },
 };
 </script>
 
