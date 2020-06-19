@@ -26,7 +26,7 @@ const db = firebase.firestore(),
     auth = firebase.auth(),
     storage = firebase.storage(),
     postsCollection = db.collection("posts"),
-    imageUrlCollection = db.collection('images'),
+    imageCollection = db.collection('images'),
     calendarCollection = db.collection('calendar')
 
 // firebase collections
@@ -36,6 +36,6 @@ export {
     auth,
     storage,
     postsCollection,
-    imageUrlCollection,
+    imageCollection,
     calendarCollection
 };
