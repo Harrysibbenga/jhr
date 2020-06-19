@@ -10,6 +10,10 @@ import vuelidate from "vuelidate";
 import Loader from "@/components/Loader";
 import Contact from "@/components/Contact";
 import Header from "@/components/Header-footer/Header";
+
+// WYSIWYG
+import CKEditor from "@ckeditor/ckeditor5-vue";
+import Editor from "./components/UI/Editor.vue"
 import {
   BIcon,
   IconsPlugin,
@@ -17,8 +21,10 @@ import {
 } from "bootstrap-vue";
 
 Vue.component('BIcon', BIcon)
+Vue.use(CKEditor);
 Vue.use(NavbarPlugin)
 Vue.use(IconsPlugin);
+Vue.component("app-editor", Editor);
 
 
 import {
