@@ -6,27 +6,9 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 d-flex flex-row py-5">
-            <button
-              class="btn"
-              :class="{ active: isActive == 'all' }"
-              @click="filter('all')"
-            >
-              All
-            </button>
-            <button
-              class="btn"
-              :class="{ active: isActive == '2020' }"
-              @click="filter('2020')"
-            >
-              2020
-            </button>
-            <button
-              class="btn"
-              :class="{ active: isActive == '2019' }"
-              @click="filter('2019')"
-            >
-              2019
-            </button>
+            <button class="btn" :class="{ active: isActive == 'all' }" @click="filter('all')">All</button>
+            <button class="btn" :class="{ active: isActive == '2020' }" @click="filter('2020')">2020</button>
+            <button class="btn" :class="{ active: isActive == '2019' }" @click="filter('2019')">2019</button>
           </div>
         </div>
         <transition name="fade">
@@ -37,28 +19,18 @@
               :key="index"
             >
               <div class="view overlay zoom">
-                <img
-                  src="../assets/F4/2 - Donington Park/4ed8bab2-51a0-4df3-aae5-9d570abbe4af.jpg"
-                  alt
-                  class="img-fluid"
-                />
+                <img :src="post.url" :alt="post.alt" class="img-fluid" @load="getImage(post.imgId)" />
                 <div
                   class="mask rgba-black-strong d-flex flex-column justify-content-end pb-4 pl-4"
                 >
                   <h2 class="text-white">{{ post.title }}</h2>
                   <p class="text-white">{{ post.date | formatDate }}</p>
-                  <router-link :to="`/post/${post.slug}`" class="text-danger"
-                    >More info</router-link
-                  >
+                  <router-link :to="`/post/${post.slug}`" class="text-danger">More info</router-link>
                 </div>
               </div>
             </div>
             <div class="col-12 text-center">
-              <mdb-btn
-                :class="{ 'd-none': pageNumber == 0 }"
-                @click="prevPage"
-                color="primary"
-              >
+              <mdb-btn :class="{ 'd-none': pageNumber == 0 }" @click="prevPage" color="primary">
                 <mdb-icon icon="angle-double-left" />
               </mdb-btn>
               <mdb-btn
@@ -79,6 +51,7 @@
 <script>
 import { mdbIcon, mdbBtn } from "mdbvue";
 import moment from "moment";
+import { imageCollection } from "../../firebase";
 // @ is an alias to /src
 
 export default {
@@ -89,14 +62,18 @@ export default {
       pageNumber: 0,
       postsVw: [],
       transition: false,
+      post: {
+        img: "",
+        alt: ""
+      }
     };
   },
   props: {
     size: {
       type: Number,
       required: false,
-      default: 6,
-    },
+      default: 6
+    }
   },
   computed: {
     posts: {
@@ -105,7 +82,7 @@ export default {
       },
       set: function(newValue) {
         return newValue;
-      },
+      }
     },
     pageCount() {
       let l = this.posts.length,
@@ -116,11 +93,11 @@ export default {
       const start = this.pageNumber * this.size,
         end = start + this.size;
       return this.posts.slice(start, end);
-    },
+    }
   },
   components: {
     mdbIcon,
-    mdbBtn,
+    mdbBtn
   },
   methods: {
     filter(value) {
@@ -144,12 +121,21 @@ export default {
         console.log(this.posts);
       }
     },
+    getImage(id) {
+      imageCollection
+        .doc(id)
+        .get()
+        .then(doc => {
+          this.post.img = doc.data().url;
+          this.post.alt = doc.data().alt;
+        });
+    },
     nextPage() {
       this.pageNumber++;
     },
     prevPage() {
       this.pageNumber--;
-    },
+    }
   },
   created() {
     this.isActive = "all";
@@ -167,8 +153,8 @@ export default {
       }
       let date = val;
       return moment(date).format("Do MMM YYYY");
-    },
-  },
+    }
+  }
 };
 </script>
 
