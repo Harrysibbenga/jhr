@@ -1,8 +1,15 @@
 <template>
   <div id="carousel-section" class="position-relative">
     <mdb-carousel :items="items" :interval="4000" controlls class="d-none d-md-block"></mdb-carousel>
-    <div v-if="upcomingEvent" class="timer">
-      <timer :deadline="upcomingEvent"></timer>
+    <div class="timer-cont">
+      <div class="d-flex">
+        <div class="timer">
+          <timer :deadline="upcomingF3Event" :race="'F3'"></timer>
+        </div>
+        <div class="timer">
+          <timer :deadline="upcomingF4Event" :race="'F4'"></timer>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -10,41 +17,87 @@
 <script>
 import { mdbCarousel } from "mdbvue";
 import Timer from "./Timer";
+import moment from "moment";
 
 export default {
   name: "Carousel",
   props: {
-    msg: String
+    msg: String,
   },
   data() {
     return {
-      upcomingEvent: "07/07/2020",
-      items: [
-        {
-          img: true,
-          src: "https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg"
-        },
-        {
-          img: true,
-          src: "https://mdbootstrap.com/img/Photos/Slides/img%20(16).jpg"
-        },
-        {
-          img: true,
-          src: "https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg"
-        }
-      ]
+      view: "f3",
+      f3Date: "",
+      f4Date: "",
     };
   },
   components: {
     Timer,
-    mdbCarousel
-  }
+    mdbCarousel,
+  },
+  computed: {
+    f3Fixtures() {
+      return this.$store.getters["formula3/getFixtures"];
+    },
+    f4Fixtures() {
+      return this.$store.getters["formula4/getFixtures"];
+    },
+    upcomingF3Event() {
+      let now = new Date(new Date().toDateString());
+      let ongoing = [];
+      let results = "";
+      this.f3Fixtures.forEach((fixture) => {
+        if (moment(fixture.date).toDate() > now) {
+          ongoing.push(fixture);
+        } else if (moment(fixture.date).toDate() === now) {
+          ongoing.push(fixture);
+        }
+      });
+      if (ongoing[0] == undefined) {
+        results = "";
+      } else {
+        results = ongoing[0].date;
+      }
+      return results;
+    },
+    upcomingF4Event() {
+      let now = new Date(new Date().toDateString());
+      let ongoing = [];
+      let results = "";
+      this.f4Fixtures.forEach((fixture) => {
+        if (moment(fixture.date).toDate() > now) {
+          fixture.ongoing = true;
+          ongoing.push(fixture);
+        }
+      });
+      if (ongoing[0] == undefined) {
+        results = "";
+      } else {
+        results = ongoing[0].date;
+      }
+      return results;
+    },
+    carouselItems() {
+      return this.$store.getters["carousel/getImages"];
+    },
+    items() {
+      let items = [];
+      this.carouselItems.forEach((carouselItem) => {
+        let item = {
+          img: true,
+          src: carouselItem.url,
+        };
+        items.push(item);
+      });
+      return items;
+    },
+  },
 };
 </script>
 
 <style scoped>
 @media (min-width: 768px) {
-  .timer {
+  .timer-cont {
     position: absolute;
     top: 0;
     z-index: 2;

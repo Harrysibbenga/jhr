@@ -4,8 +4,7 @@
     <mdb-btn
       class="btn btn-grey text-white ml-auto mt-4"
       @click.native="modal = true"
-      >Contact us for more information</mdb-btn
-    >
+    >Contact us for more information</mdb-btn>
     <mdb-modal
       side
       position="right"
@@ -16,47 +15,31 @@
       removeBackdrop
     >
       <form class="needs-validation" novalidate @submit.prevent="submitForm">
-        <div
-          class="g-recaptcha"
-          data-sitekey="6LfX76QZAAAAABce03WAFwtbZgnHU909_NDK8q7t"
-        ></div>
+        <div class="g-recaptcha" data-sitekey="6LfX76QZAAAAABce03WAFwtbZgnHU909_NDK8q7t"></div>
         <mdb-modal-header>
           <mdb-modal-title>Contact Us</mdb-modal-title>
         </mdb-modal-header>
         <mdb-modal-body>
           <mdb-card>
             <mdb-card-body>
-              <mdb-card-text class="pb-4 text-center" mr-4 ml-4
-                >Do you have any questions? Please do not hesitate to contact us
+              <mdb-card-text class="pb-4 text-center" mr-4 ml-4>
+                Do you have any questions? Please do not hesitate to contact us
                 directly. Our team will cgetback to you within a matter of hours
-                to help you.</mdb-card-text
-              >
+                to help you.
+              </mdb-card-text>
               <mdb-row>
                 <mdb-col>
                   <mdb-row>
                     <mdb-col>
-                      <mdb-input
-                        label="Your name"
-                        v-model="fields.name"
-                        required
-                      />
+                      <mdb-input label="Your name" v-model="fields.name" required />
                     </mdb-col>
                     <mdb-col>
-                      <mdb-input
-                        type="email"
-                        label="Your email"
-                        v-model="fields.email"
-                        required
-                      />
+                      <mdb-input type="email" label="Your email" v-model="fields.email" required />
                     </mdb-col>
                   </mdb-row>
                   <mdb-row>
                     <mdb-col>
-                      <mdb-input
-                        label="Subject"
-                        v-model="fields.subject"
-                        required
-                      />
+                      <mdb-input label="Subject" v-model="fields.subject" required />
                     </mdb-col>
                   </mdb-row>
                   <mdb-row>

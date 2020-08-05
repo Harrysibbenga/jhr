@@ -8,9 +8,8 @@
           </span>
         </div>
         <div class="align-self-center text-center">
-          <span>{{day}}&nbsp;</span>
-          <span>{{month}}</span>,
-          <span>{{year}}</span>
+          <span>{{race}} - &nbsp;</span>
+          <span>{{deadline | formatDate}}&nbsp;</span>
           <p>
             Event live
             <span v-if="days">{{ days }} :</span>
@@ -20,14 +19,31 @@
         </div>
       </div>
     </div>
-    <div class="text-center" v-if="!currentTime">Stay tuned for the next event!</div>
+    <div v-if="!currentTime" class="timer bg-dark text-white">
+      <div class="d-flex justify-content-around">
+        <div class="align-self-center">
+          <span>
+            <img src="../assets/satellite-dish-solid.png" width="20px" height="20px" />
+          </span>
+        </div>
+        <div class="align-self-center text-center">
+          <p>Stay tuned for the next {{ race }} event!</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   props: {
     deadline: {
+      type: String,
+      required: true
+    },
+    race: {
       type: String,
       required: true
     },
@@ -61,7 +77,6 @@ export default {
   mounted() {
     setInterval(() => {
       this.countdown();
-      this.setDate();
     }, 500);
   },
   computed: {
@@ -84,6 +99,13 @@ export default {
         return "0" + value;
       }
       return value;
+    },
+    formatDate(val) {
+      if (!val) {
+        return "-";
+      }
+      let date = val;
+      return moment(date).format("Do MMM YYYY");
     }
   },
   methods: {
@@ -94,12 +116,6 @@ export default {
       } else {
         this.currentTime = null;
       }
-    },
-    setDate() {
-      let d = new Date(this.deadline);
-      this.day = d.getDate();
-      this.month = this.months[d.getMonth()];
-      this.year = d.getFullYear();
     }
   }
 };

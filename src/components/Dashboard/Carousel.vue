@@ -2,38 +2,18 @@
   <div>
     <mdb-container>
       <mdb-row>
-        <mdb-col class="text-center pt-2">
-          <img v-if="post.url" :src="post.url" :alt="img.alt" class="img-fluid" />
+        <form @submit.prevent="submitForm">
+          <mdb-col class="text-center pt-2">
+            <img v-if="carousel.url" :src="carousel.url" :alt="img.alt" class="img-fluid" />
 
-          <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
-        </mdb-col>
+            <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
 
-        <mdb-col>
-          <form @submit.prevent="submitForm" class="pt-2">
-            <div class="row">
-              <div class="md-form col-4 p-0">
-                <mdb-btn color="primary" class="ml-3" inline @click="newImage">Headline Image</mdb-btn>
-              </div>
-
-              <div class="md-form col-md-6 col-lg-4">
-                <mdb-input type="date" inline v-model.trim="post.date" />
-              </div>
+            <div class>
+              <mdb-btn color="primary" class="ml-3" inline @click="newImage">Add image</mdb-btn>
+              <mdb-btn color="primary" class="ml-3" inline type="submit">Save</mdb-btn>
             </div>
-
-            <div class="md-form">
-              <mdb-input label="Title" inline v-model.trim="post.title" />
-            </div>
-
-            <div class="md-form">
-              <mdb-input label="Excerpt" inline v-model.trim="post.excerpt" />
-            </div>
-
-            <mdb-col>
-              <app-editor2 :content.sync="post.content"></app-editor2>
-              <mdb-btn color="primary" type="submit">Add Post</mdb-btn>
-            </mdb-col>
-          </form>
-        </mdb-col>
+          </mdb-col>
+        </form>
       </mdb-row>
     </mdb-container>
 
@@ -49,42 +29,16 @@
 
     <mdb-container fluid class="p-0 pt-5">
       <mdb-row>
-        <mdb-col>
-          <table class="table">
-            <thead class="black text-white">
-              <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Date</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(post, index) in paginatedData" :key="index">
-                <th scope="row">{{ post.title }}</th>
-                <td>{{ post.date | formatDate }}</td>
-                <td>
-                  <a @click="editPost(post)" class="mr-1">
-                    <mdb-icon icon="edit" />
-                  </a>
-                  <a @click="deletePost(post)" class="ml-1">
-                    <mdb-icon icon="trash-alt" />
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </mdb-col>
-        <mdb-col class="col-12 text-center">
-          <mdb-btn :class="{ 'd-none': pageNumber == 0 }" @click="prevPage" color="primary">
-            <mdb-icon icon="angle-double-left" />
-          </mdb-btn>
-          <mdb-btn
-            :class="{ 'd-none': pageNumber >= pageCount - 1 }"
-            @click="nextPage"
-            color="primary"
-          >
-            <mdb-icon icon="angle-double-right" />
-          </mdb-btn>
+        <mdb-col class="col-4" v-for="(carouselImage, index) in carouselList" :key="index">
+          <img :src="carouselImage.url" :alt="carouselImage.alt" class="img-fluid" />
+          <div class="text-center">
+            <a @click="editItem(carouselImage)" class="mr-1">
+              <mdb-icon icon="edit" />
+            </a>
+            <a @click="deleteItem(carouselImage)" class="ml-1">
+              <mdb-icon icon="trash-alt" />
+            </a>
+          </div>
         </mdb-col>
       </mdb-row>
     </mdb-container>
@@ -92,29 +46,17 @@
     <!-- editModel  -->
     <mdb-modal top position="top" fullHeight direction="top" :show="editModal" @close="cancelEdit">
       <mdb-modal-header>
-        <mdb-modal-title>{{ clickedPost.title }}</mdb-modal-title>
+        <mdb-modal-title>{{ clickedItem.name }}</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body>
         <form @submit.prevent class="p-2">
-          <img v-if="clickedPost.url" :src="clickedPost.url" class="img-fluid" />
-
+          <img
+            v-if="clickedItem.url"
+            :src="clickedItem.url"
+            class="img-fluid"
+            :alt="clickedItem.alt"
+          />
           <mdb-btn @click="changeImage" color="primary">Change image</mdb-btn>
-
-          <div class="md-form col-md-6 col-lg-4 p-0">
-            <mdb-input type="date" inline v-model.trim="clickedPost.date" />
-          </div>
-
-          <div class="md-form">
-            <mdb-input label="Title" inline v-model.trim="clickedPost.title" />
-          </div>
-
-          <div class="md-form">
-            <mdb-input label="Excerpt" inline v-model.trim="clickedPost.excerpt" />
-          </div>
-
-          <div class="md-form">
-            <app-editor2 :content.sync="clickedPost.content"></app-editor2>
-          </div>
         </form>
       </mdb-modal-body>
       <mdb-container>
@@ -143,8 +85,8 @@
       @close="deleteModal = false"
     >
       <mdb-modal-body class="text-center">
-        <span class="text-danger">Are you sure you want to delete this post</span>
-        {{ toDeletePost.title }}
+        <span class="text-danger">Are you sure you want to delete this image from the list</span>
+        {{ toDeleteItem.name }}
         <mdb-btn color="secondary" @click.native="cancelDelete">Close</mdb-btn>
         <mdb-btn color="danger" @click="confirmDelete">Delete</mdb-btn>
       </mdb-modal-body>
@@ -224,50 +166,53 @@
 
 <script>
 import moment from "moment";
-import { postsCollection, imageCollection } from "../../../firebase";
+import { carouselCollection, imageCollection } from "../../../firebase";
 import {
   mdbInput,
   mdbBtn,
   mdbContainer,
   mdbIcon,
+  mdbCol,
   mdbModalHeader,
   mdbModalTitle,
   mdbModalBody,
   mdbModalFooter,
   mdbModal,
+  mdbRow,
 } from "mdbvue";
-
 export default {
   data() {
     return {
-      post: {
-        title: "",
-        excerpt: "",
-        slug: "",
-        date: "",
-        content: "",
-        year: "",
-        imgId: "",
+      clickedItem: {
+        name: "",
+        alt: "",
         url: "",
+        id: "",
+        imgId: "",
       },
-      pageNumber: 0,
-      msg: "",
-      editMsg: "",
+      carousel: {
+        name: "",
+        alt: "",
+        url: "",
+        imgId: "",
+      },
+      toDeleteItem: {
+        id: "",
+        name: "",
+        alt: "",
+        url: "",
+        imgId: "",
+      },
+      msg: {
+        message: "",
+        type: "",
+      },
+      editMsg: {
+        message: "",
+        type: "",
+      },
       editModal: false,
       deleteModal: false,
-      toDeletePost: {
-        id: "",
-        title: "",
-      },
-      clickedPost: {
-        id: "",
-        title: "",
-        excerpt: "",
-        slug: "",
-        date: "",
-        content: "",
-        year: "",
-      },
       existsModal: false,
       uploadImage: false,
       file: "",
@@ -281,13 +226,6 @@ export default {
         "https://firebasestorage.googleapis.com/v0/b/jhr-developments-c5bba.appspot.com/o/images%2Fimg-placeholder.png?alt=media&token=7d9c5978-d45d-4049-91d9-ceb235823db7",
     };
   },
-  props: {
-    size: {
-      type: Number,
-      required: false,
-      default: 10,
-    },
-  },
   components: {
     mdbInput,
     mdbBtn,
@@ -298,10 +236,12 @@ export default {
     mdbModalBody,
     mdbModalFooter,
     mdbModal,
+    mdbCol,
+    mdbRow,
   },
   computed: {
-    posts() {
-      return this.$store.getters["posts/getPosts"];
+    carouselList() {
+      return this.$store.getters["carousel/getImages"];
     },
     uploadMsg() {
       return this.$store.getters["images/getMsg"];
@@ -309,28 +249,14 @@ export default {
     updatedImage() {
       return this.$store.getters["images/getImage"];
     },
-    pageCount() {
-      let l = this.posts.length,
-        s = this.size;
-      return Math.ceil(l / s);
-    },
-    paginatedData() {
-      const start = this.pageNumber * this.size,
-        end = start + this.size;
-      return this.posts.slice(start, end);
-    },
   },
   methods: {
     reset() {
-      this.post = {
-        title: "",
-        excerpt: "",
-        slug: "",
-        date: "",
-        content: "",
-        year: "",
-        imgId: "",
+      this.carousel = {
+        name: "",
+        alt: "",
         url: "",
+        imgId: "",
       };
       this.file = "";
       this.img = {
@@ -339,42 +265,24 @@ export default {
         alt: "",
       };
     },
-    addPost() {
-      let slugArry = [],
-        newSlug = [],
-        date = "";
-      // create slug
-      slugArry = this.post.title.split(" ");
-      date = this.post.date;
-      this.post.year = date.split("-")[0];
-
-      slugArry.forEach((item) => {
-        newSlug.push(item.toLowerCase());
-      });
-
-      this.post.slug = newSlug.join("-") + "-" + date;
-
-      if (this.post.url == "") {
-        this.post.url = this.defaultImage;
+    addItem() {
+      if (this.carousel.url == "") {
+        this.carousel.url = this.defaultImage;
       }
 
-      postsCollection
+      carouselCollection
         .add({
-          title: this.post.title,
-          excerpt: this.post.excerpt,
-          slug: this.post.slug,
-          date: this.post.date,
-          content: this.post.content,
-          year: this.post.year,
+          name: this.carousel.name,
           createdOn: new Date(),
-          imgId: this.post.imgId,
-          url: this.post.url,
+          imgId: this.carousel.imgId,
+          url: this.carousel.url,
+          alt: this.carousel.alt,
         })
         .then(() => {
           this.reset();
           this.msg = {
             type: "success",
-            message: "Post added",
+            message: "Carousel item added",
           };
           setTimeout(() => {
             this.msg = {
@@ -425,22 +333,26 @@ export default {
         this.$store.dispatch("images/uploadImage", payload);
         setTimeout(() => {
           this.img.content = this.updatedImage;
-          this.post.imgId = this.img.content.id;
-          this.post.url = this.img.content.url;
+          this.carousel.imgId = this.img.content.id;
+          this.carousel.url = this.img.content.url;
+          this.carousel.alt = this.img.alt;
+          this.carousel.name = this.file.name;
           this.uploadImage = false;
           this.type = "";
-          this.file.name = "";
+          this.file = "";
+          this.img.alt = "";
         }, 2000);
       } else if (this.type == "edit") {
         let payload = {};
         payload.file = this.file;
         payload.alt = this.img.alt;
-        this.img.alt = "";
         this.$store.dispatch("images/uploadImage", payload);
         setTimeout(() => {
           this.img.content = this.updatedImage;
-          this.clickedPost.imgId = this.img.content.id;
-          this.clickedPost.url = this.img.content.url;
+          this.clickedItem.imgId = this.img.content.id;
+          this.clickedItem.url = this.img.content.url;
+          this.clickedItem.alt = this.img.alt;
+          this.clickedItem.name = this.file.name;
           this.uploadImage = false;
           this.type = "";
           this.file = "";
@@ -456,18 +368,20 @@ export default {
     },
     confirmUse() {
       if (this.type == "new") {
-        this.post.imgId = this.img.id;
+        this.carousel.imgId = this.img.id;
         this.existsModal = false;
-        this.post.url = this.img.content.url;
-        this.img.alt = this.img.content.alt;
+        this.carousel.url = this.img.content.url;
+        this.carousel.alt = this.img.content.alt;
+        this.carousel.name = this.file.name;
         this.type = "";
         this.file = "";
         this.img.alt = "";
       } else if (this.type == "edit") {
-        this.clickedPost.imgId = this.img.id;
+        this.clickedItem.imgId = this.img.id;
         this.existsModal = false;
-        this.clickedPost.url = this.img.content.url;
-        this.img.alt = this.img.content.alt;
+        this.clickedItem.url = this.img.content.url;
+        this.clickedItem.alt = this.img.content.alt;
+        this.clickedItem.name = this.file.name;
         this.type = "";
         this.file = "";
         this.img.alt = "";
@@ -482,48 +396,37 @@ export default {
       this.img.alt = "";
     },
     submitForm() {
-      if (this.post.date == "" || this.post.title == "") {
-        this.msg = {
-          type: "warning",
-          message: "Missing information check the form is completely filled",
-        };
-        setTimeout(() => {
-          this.msg = {
-            type: "",
-            message: "",
-          };
-        }, 2000);
-      } else {
-        this.addPost();
-      }
+      this.addItem();
     },
-    nextPage() {
-      this.pageNumber++;
-    },
-    prevPage() {
-      this.pageNumber--;
-    },
-    deletePost(post) {
+    deleteItem(item) {
       this.deleteModal = true;
-      this.toDeletePost.title = post.title;
-      this.toDeletePost.id = post.id;
+      this.toDeleteItem = {
+        id: item.id,
+        name: item.name,
+        alt: item.alt,
+        url: item.url,
+        imgId: item.imgId,
+      };
     },
     cancelDelete() {
-      this.toDeletePost = {
+      this.toDeleteItem = {
         id: "",
-        title: "",
+        name: "",
+        alt: "",
+        url: "",
+        imgId: "",
       };
       this.deleteModal = false;
     },
     confirmDelete() {
-      postsCollection
-        .doc(this.toDeletePost.id)
+      carouselCollection
+        .doc(this.toDeleteItem.id)
         .delete()
         .then(() => {
           this.deleteModal = false;
           this.msg = {
             type: "danger",
-            message: "Post deleted",
+            message: "Carousel item deleted",
           };
           setTimeout(() => {
             this.msg = {
@@ -545,29 +448,20 @@ export default {
           }, 2000);
         });
     },
-    editPost(post) {
+    editItem(item) {
       this.editModal = true;
-      this.clickedPost.id = post.id;
-      this.clickedPost.title = post.title;
-      this.clickedPost.content = post.content;
-      this.clickedPost.excerpt = post.excerpt;
-      this.clickedPost.slug = post.slug;
-      this.clickedPost.date = post.date;
-      this.clickedPost.content = post.content;
-      this.clickedPost.year = post.year;
-      this.clickedPost.url = post.url;
-      this.clickedPost.imgId = post.imgId;
+      this.clickedItem.id = item.id;
+      this.clickedItem.name = item.name;
+      this.clickedItem.url = item.url;
+      this.clickedItem.imgId = item.imgId;
+      this.clickedItem.alt = item.alt;
     },
     cancelEdit() {
-      this.clickedPost = {
-        id: "",
-        title: "",
-        excerpt: "",
-        slug: "",
-        date: "",
-        content: "",
-        year: "",
+      this.clickedItem = {
+        name: "",
+        alt: "",
         url: "",
+        id: "",
         imgId: "",
       };
       this.editModal = false;
@@ -577,38 +471,20 @@ export default {
       this.type = "edit";
     },
     saveEdit() {
-      let slugArry = [],
-        newSlug = [],
-        date = "";
-      // create slug
-      slugArry = this.clickedPost.title.split(" ");
-      date = this.clickedPost.date;
-      this.clickedPost.year = date.split("-")[0];
-
-      slugArry.forEach((item) => {
-        newSlug.push(item.toLowerCase());
-      });
-
-      this.clickedPost.slug = newSlug.join("-") + "-" + date;
-
-      postsCollection
-        .doc(this.clickedPost.id)
+      carouselCollection
+        .doc(this.clickedItem.id)
         .update({
-          title: this.clickedPost.title,
-          excerpt: this.clickedPost.excerpt,
-          slug: this.clickedPost.slug,
-          date: this.clickedPost.date,
-          content: this.clickedPost.content,
-          year: this.clickedPost.year,
+          name: this.clickedItem.name,
           createdOn: new Date(),
-          imgId: this.clickedPost.imgId,
-          url: this.clickedPost.url,
+          imgId: this.clickedItem.imgId,
+          url: this.clickedItem.url,
+          alt: this.clickedItem.alt,
         })
         .then(() => {
           this.cancelEdit();
           this.msg = {
             type: "success",
-            message: "Post updated",
+            message: "Carousel item updated",
           };
           setTimeout(() => {
             this.msg = {
@@ -642,5 +518,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css"></style>

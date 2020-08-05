@@ -9,8 +9,10 @@
       </div>
       <b-nav tabs>
         <b-nav-item to="/dashboard/posts/">Posts</b-nav-item>
-        <b-nav-item to="/dashboard/calenders/">Calenders</b-nav-item>
+        <b-nav-item to="/dashboard/calendars/">Calendars</b-nav-item>
         <b-nav-item to="/dashboard/carousel/">Carousel</b-nav-item>
+        <b-nav-item to="/dashboard/drivers/">Drivers</b-nav-item>
+        <b-nav-item to="/dashboard/gallery/">Gallery</b-nav-item>
         <b-nav-item @click="logout">Logout</b-nav-item>
       </b-nav>
     </div>
@@ -28,11 +30,11 @@ export default {
       auth.signOut().then(() => {
         this.$router.push("/");
       });
-    }
+    },
   },
   components: {
-    mdbIcon
-  }
+    mdbIcon,
+  },
 };
 </script>
 

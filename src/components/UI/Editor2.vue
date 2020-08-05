@@ -3,23 +3,9 @@
     <ckeditor
       :editor="editor"
       :config="editorConfig"
-      v-model="content"
+      :value="content"
+      @input="(content) => $emit('update:content', content)"
     ></ckeditor>
-
-    <button
-      class="btn btn-sm btn-secondary mt-2"
-      type="button"
-      @click="updateMain()"
-    >
-      Confirm layout
-    </button>
-    <button
-      class="btn btn-sm btn-danger mt-2 ml-2"
-      type="button"
-      @click="clear()"
-    >
-      Clear layout
-    </button>
   </div>
 </template>
 
@@ -52,13 +38,19 @@ import FontFamily from "@ckeditor/ckeditor5-font/src/fontfamily";
 import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
 
 export default {
-  props: ["content"],
+  props: {
+    content: {
+      type: String,
+      required: true,
+    },
+  },
+  model: {
+    prop: "content",
+    value: "input",
+  },
   data() {
     return {
-      mainContent: {
-        content: "",
-        clicked: false,
-      },
+      mainContent: "",
       editor: ClassicEditor,
       editorConfig: {
         plugins: [
@@ -135,6 +127,11 @@ export default {
         heading: {
           options: [
             {
+              model: "paragraph",
+              title: "Paragraph",
+              class: "ck-heading_paragraph",
+            },
+            {
               model: "heading1",
               view: "h1",
               title: "Heading 1",
@@ -153,9 +150,16 @@ export default {
               class: "ck-heading_heading3",
             },
             {
-              model: "paragraph",
-              title: "Paragraph",
-              class: "ck-heading_paragraph",
+              model: "heading4",
+              view: "h4",
+              title: "Heading 4",
+              class: "ck-heading_heading4",
+            },
+            {
+              model: "heading5",
+              view: "h5",
+              title: "Heading 5",
+              class: "ck-heading_heading5",
             },
           ],
         },
@@ -288,18 +292,6 @@ export default {
         },
       },
     };
-  },
-  methods: {
-    updateMain() {
-      this.mainContent.content = this.content;
-      this.mainContent.clicked = true;
-      this.$emit("content-updated", this.mainContent);
-    },
-    clear() {
-      this.mainContent.content = "";
-      this.mainContent.clicked = false;
-      this.content = "";
-    },
   },
 };
 </script>

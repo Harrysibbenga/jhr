@@ -27,7 +27,12 @@ const db = firebase.firestore(),
     storage = firebase.storage(),
     postsCollection = db.collection("posts"),
     imageCollection = db.collection('images'),
-    calendarCollection = db.collection('calendar')
+    circuitsCollection = db.collection('circuits'),
+    formula3Collection = db.collection("formula3"),
+    formula4Collection = db.collection("formula4"),
+    driversCollection = db.collection('drivers'),
+    carouselCollection = db.collection('carousel')
+
 
 // firebase collections
 
@@ -37,5 +42,9 @@ export {
     storage,
     postsCollection,
     imageCollection,
-    calendarCollection
+    circuitsCollection,
+    formula3Collection,
+    formula4Collection,
+    driversCollection,
+    carouselCollection
 };

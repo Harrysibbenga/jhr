@@ -13,7 +13,7 @@ import Header from "@/components/Header-footer/Header";
 
 // WYSIWYG
 import CKEditor from "@ckeditor/ckeditor5-vue";
-import Editor from "./components/UI/Editor.vue"
+import Editor2 from "./components/UI/Editor2.vue"
 import {
   BIcon,
   IconsPlugin,
@@ -24,7 +24,7 @@ Vue.component('BIcon', BIcon)
 Vue.use(CKEditor);
 Vue.use(NavbarPlugin)
 Vue.use(IconsPlugin);
-Vue.component("app-editor", Editor);
+Vue.component("app-editor2", Editor2);
 
 
 import {
