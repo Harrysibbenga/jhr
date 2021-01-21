@@ -106,10 +106,10 @@ export default {
       if (this.validate("email", "name", "message", "subject")) {
         emailjs
           .sendForm(
-            "*******",
-            "***************",
+            "gmail_jhr",
+            "jhr_template_CogtKdJO",
             event.target,
-            "***************"
+            "user_NneW5XuAU0JIqdI7Wr8RN"
           )
           .then(
             (result) => {

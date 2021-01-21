@@ -6,8 +6,13 @@
         <div class="row">
           <div class="col-12 d-flex flex-row py-5">
             <button class="btn" :class="{ active: isActive == 'all' }" @click="filter('all')">All</button>
-            <button class="btn" :class="{ active: isActive == '2020' }" @click="filter('2020')">2020</button>
-            <button class="btn" :class="{ active: isActive == '2019' }" @click="filter('2019')">2019</button>
+            <button
+              v-for="(year, index) in years"
+              :key="index"
+              class="btn"
+              :class="{ active: isActive == year }"
+              @click="filter(year)"
+            >{{year}}</button>
           </div>
         </div>
         <transition name="fade">
@@ -83,6 +88,11 @@ export default {
         return newValue;
       },
     },
+    years() {
+      const allPosts = this.$store.getters["posts/getPosts"];
+      const years = [...new Set(allPosts.map((item) => item.year))];
+      return years;
+    },
     pageCount() {
       let l = this.posts.length,
         s = this.size;
@@ -138,6 +148,7 @@ export default {
   },
   created() {
     this.isActive = "all";
+    console.log(this.years);
   },
   mounted() {
     setTimeout(() => {

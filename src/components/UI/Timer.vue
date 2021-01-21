@@ -4,12 +4,16 @@
       <div class="d-flex justify-content-around">
         <div class="align-self-center">
           <span>
-            <img :src="require('@/assets/satellite-dish-solid.png')" width="20px" height="20px" />
+            <img
+              :src="require('@/assets/satellite-dish-solid.png')"
+              width="20px"
+              height="20px"
+            />
           </span>
         </div>
         <div class="align-self-center text-center">
-          <span>{{race}} - &nbsp;</span>
-          <span>{{deadline | formatDate}}&nbsp;</span>
+          <span>{{ race }} - &nbsp;</span>
+          <span>{{ deadline | formatDate }}&nbsp;</span>
           <p>
             Event live
             <span v-if="days">{{ days }} :</span>
@@ -23,7 +27,11 @@
       <div class="d-flex justify-content-around">
         <div class="align-self-center">
           <span>
-            <img :src="require('@/assets/satellite-dish-solid.png')" width="20px" height="20px" />
+            <img
+              :src="require('@/assets/satellite-dish-solid.png')"
+              width="20px"
+              height="20px"
+            />
           </span>
         </div>
         <div class="align-self-center text-center">

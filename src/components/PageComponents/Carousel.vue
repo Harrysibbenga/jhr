@@ -1,6 +1,11 @@
 <template>
   <div id="carousel-section" class="position-relative">
-    <mdb-carousel :items="items" :interval="4000" controlls class="d-none d-md-block"></mdb-carousel>
+    <mdb-carousel
+      :items="items"
+      :interval="4000"
+      controlls
+      class="d-none d-md-block"
+    ></mdb-carousel>
     <div class="timer-cont">
       <div class="d-flex flex-column flex-md-row flex-center">
         <div class="timer mt-1">

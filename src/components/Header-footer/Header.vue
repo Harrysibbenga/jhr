@@ -60,8 +60,8 @@
               <span class="text-white">Email:</span>
               <a
                 class="text-secondary"
-                href="mailto:enquiries@jhrdevelopments.com"
-              >enquiries@jhrdevelopments.com</a>
+                href="mailto:Steven@JHRdevelopments.com"
+              >Steven@JHRdevelopments.com</a>
             </p>
             <div class="container-fluid text-center">
               <div class="row mx-auto py-4">
