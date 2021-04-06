@@ -31,7 +31,6 @@
 import moment from "moment";
 export default {
   name: "Latest",
-
   computed: {
     latestPost() {
       return this.$store.getters["posts/getPosts"][0];

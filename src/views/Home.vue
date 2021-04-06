@@ -1,9 +1,9 @@
 <template>
   <div id="home">
     <Header></Header>
-    <carousel class="position-relative"></carousel>
-    <latest></latest>
-    <calendar></calendar>
+    <Carousel class="position-relative"></Carousel>
+    <Latest></Latest>
+    <Calendar></Calendar>
   </div>
 </template>
 

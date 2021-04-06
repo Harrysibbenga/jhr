@@ -33,11 +33,7 @@
 
 <script>
 import moment from "moment";
-import { mdbSticky } from "mdbvue";
 export default {
-  directives: {
-    sticky: mdbSticky,
-  },
   computed: {
     fixtures() {
       return this.$store.getters["formula3/getFixtures"];
