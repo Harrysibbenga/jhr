@@ -34,6 +34,8 @@ import {
   auth
 } from "../../firebase";
 
+import store from "../store/store";
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -159,12 +161,16 @@ const router = new VueRouter({
       },
     },
   ],
+  // eslint-disable-next-line no-unused-vars
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  }
 });
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((x) => x.meta.requiresAuth);
   const currentUser = auth.currentUser;
-
+  store.dispatch("global/setLoading", true);
   if (requiresAuth && !currentUser) {
     next("/login");
   } else if (requiresAuth && currentUser) {
@@ -174,6 +180,10 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach(() => {
+  store.dispatch("global/setLoading", false);
 });
 
 export default router;

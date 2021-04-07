@@ -1,7 +1,6 @@
 <template>
   <div>
     <Header></Header>
-
     <div id="about" class="container-fluid">
       <div class="row">
         <div class="col-12 col-md-6 offset-md-3 offset-lg-0 col-lg-4 p-5 px-md-0 py-md-5 p-lg-5">

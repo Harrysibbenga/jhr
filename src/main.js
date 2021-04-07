@@ -50,17 +50,5 @@ auth.onAuthStateChanged(() => {
       render: (h) => h(App),
     })
     store.dispatch('global/setModal', true)
-    router.beforeEach((to, from, next) => {
-      store.dispatch("global/setLoading", true);
-
-      // Simulate request
-      setTimeout(() => {
-        next();
-      }, 500);
-    });
-
-    router.afterEach(() => {
-      store.dispatch("global/setLoading", false);
-    });
   }
 });
