@@ -1,4 +1,6 @@
-# jhr
+# JHR Developments
+
+View the live website <a href="https://jhrdevelopments.com/"> here </a>
 
 ## Project setup
 ```
@@ -22,3 +24,4 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
