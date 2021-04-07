@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-column flex-center bg-dark py-5">
-    <h3 class="text-light">Keep up to date with our latest content</h3>
+  <div class="d-flex flex-column flex-center bg-dark py-5 background">
+    <h2 class="text-light">Keep up to date with our latest content</h2>
     <button class="btn btn-secondary" @click="open()">Subscribe</button>
   </div>
 </template>
@@ -15,3 +15,10 @@ export default {
   },
 };
 </script>
+
+<style lang="css" scoped>
+  .background {
+    background: url('../../assets/l4_Pulling-01.jpg');
+    background-attachment: fixed; 
+  }
+</style>

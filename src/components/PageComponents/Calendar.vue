@@ -1,6 +1,9 @@
 <template>
   <div id="calendar" class="mb-3">
     <div class="container bg-dark pb-5">
+      <div class="row position-relative mb-5 pb-5">
+        <Timer />
+      </div>
       <div class="row py-5">
         <div class="col-12">
           <h4
@@ -24,14 +27,13 @@
 <script>
 import moment from "moment";
 import UiCarousel from '@/components/UI/Carousel'
+import Timer from '@/components/PageComponents/Timer'
 
 export default {
   name: "Calendar",
-  props: {
-    msg: String,
-  },
   components: {
     UiCarousel,
+    Timer
   },
   computed: {
     f4Fixtures() {

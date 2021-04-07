@@ -2,7 +2,7 @@
   <div id="home">
     <Header></Header>
     <Carousel class="position-relative"></Carousel>
-    <Latest></Latest>
+    <Simulation></Simulation>
     <Calendar></Calendar>
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 // @ is an alias to /src
 import Carousel from "@/components/PageComponents/Carousel.vue";
-import Latest from "@/components/PageComponents/Latest.vue";
+import Simulation from "@/components/PageComponents/Simulation.vue";
 import Calendar from "@/components/PageComponents/Calendar.vue";
 import LayoutDefault from "@/layouts/default"
 
@@ -18,7 +18,7 @@ export default {
   name: "Home",
   components: {
     Carousel,
-    Latest,
+    Simulation,
     Calendar,
   },
   created() {
