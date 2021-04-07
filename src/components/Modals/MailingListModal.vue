@@ -6,6 +6,7 @@
       position="bottom"
       direction="bottom"
       :show="modal"
+      @close="close()"
     >
       <form
         action="https://torquetogether.us16.list-manage.com/subscribe/post?u=1e04e4b66dd0582c8dfc304e8&amp;id=836c8ab5aa"
@@ -29,7 +30,7 @@
               <mdb-input label="Email" type="email" class="w-50 pl-2" name="EMAIL" id="mce-EMAIL" />
             </mdb-col>
             <mdb-col class="my-auto">
-              <a class="btn btn-danger" type="submit" @click="close()">Close</a>
+              <a class="btn btn-danger" @click="close()">Close</a>
               <mdb-btn color="secondary" type="submit" @click.native="close()">Subscribe</mdb-btn>
             </mdb-col>
           </mdb-row>

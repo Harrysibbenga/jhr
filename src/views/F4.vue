@@ -33,6 +33,8 @@
 
 <script>
 import moment from "moment";
+import LayoutDefault from "@/layouts/default"
+
 export default {
   computed: {
     fixtures() {
@@ -41,6 +43,9 @@ export default {
     content() {
       return this.$store.getters["f4page/getContent"];
     },
+  },
+  created() {
+    this.$emit('update:layout', LayoutDefault);
   },
   filters: {
     formatDate(val) {

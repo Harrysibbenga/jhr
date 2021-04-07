@@ -56,7 +56,7 @@ auth.onAuthStateChanged(() => {
       // Simulate request
       setTimeout(() => {
         next();
-      }, 1000);
+      }, 500);
     });
 
     router.afterEach(() => {

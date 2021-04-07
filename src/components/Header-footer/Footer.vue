@@ -1,7 +1,5 @@
 <template>
   <div>
-    <mailing-list></mailing-list>
-    <contact></contact>
     <footer class="bg-dark bottom">
       <div class="container">
         <div class="row pt-3">
@@ -9,7 +7,7 @@
             <img src="../../assets/jhr.png" alt="JHR logo" class="img-fluid mb-4" width="300px" />
             <div class="d-flex flex-row px-5 pb-3 justify-content-center">
               <div class="p-2">
-                <a href="#" target="_blank">
+                <a href="https://twitter.com/JHRdevelopments" target="_blank">
                   <img
                     src="../../assets/facebook-square-brands-white.png"
                     class="img-fluid"
@@ -18,7 +16,7 @@
                 </a>
               </div>
               <div class="p-2">
-                <a href="#" target="_blank">
+                <a href="https://www.instagram.com/jhr.developments/" target="_blank">
                   <span>
                     <img
                       src="../../assets/instagram-square-brands-white.png"
@@ -29,7 +27,7 @@
                 </a>
               </div>
               <div class="p-2">
-                <a href="#" target="_blank">
+                <a href="https://www.facebook.com/jhrdevelopments" target="_blank">
                   <img
                     src="../../assets/twitter-square-brands-white.png"
                     class="img-fluid"

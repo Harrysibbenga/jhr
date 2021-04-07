@@ -82,6 +82,7 @@
 import { required, email, minLength } from "vuelidate/lib/validators";
 import { mdbInput, mdbBtn, mdbIcon } from "mdbvue";
 import { auth } from "../../firebase";
+import Layout from "@/layouts/login"
 
 export default {
   data() {
@@ -175,6 +176,9 @@ export default {
           }, 2000);
         });
     },
+  },
+  created() {
+    this.$emit('update:layout', Layout);
   },
 };
 </script>

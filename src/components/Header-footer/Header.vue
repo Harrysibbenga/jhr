@@ -66,34 +66,34 @@
             <div class="container-fluid text-center">
               <div class="row mx-auto py-4">
                 <div class="col-4">
-                  <a href="#" target="_blank">
+                <a href="https://twitter.com/JHRdevelopments" target="_blank">
+                  <img
+                    src="../../assets/facebook-square-brands-white.png"
+                    class="img-fluid"
+                    width="35px"
+                  />
+                </a>
+              </div>
+              <div class="col-4">
+                <a href="https://www.instagram.com/jhr.developments/" target="_blank">
+                  <span>
                     <img
-                      src="../../assets/facebook-square-brands-white.png"
+                      src="../../assets/instagram-square-brands-white.png"
                       class="img-fluid"
-                      width="30px"
+                      width="35px"
                     />
-                  </a>
-                </div>
-                <div class="col-4">
-                  <a href="#" target="_blank">
-                    <span>
-                      <img
-                        src="../../assets/instagram-square-brands-white.png"
-                        class="img-fluid"
-                        width="30px"
-                      />
-                    </span>
-                  </a>
-                </div>
-                <div class="col-4">
-                  <a href="#" target="_blank">
-                    <img
-                      src="../../assets/twitter-square-brands-white.png"
-                      class="img-fluid"
-                      width="30px"
-                    />
-                  </a>
-                </div>
+                  </span>
+                </a>
+              </div>
+              <div class="col-4">
+                <a href="https://www.facebook.com/jhrdevelopments" target="_blank">
+                  <img
+                    src="../../assets/twitter-square-brands-white.png"
+                    class="img-fluid"
+                    width="35px"
+                  />
+                </a>
+              </div>
               </div>
             </div>
           </div>

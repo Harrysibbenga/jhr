@@ -24,12 +24,16 @@
 </template>
 
 <script>
+import LayoutDefault from "@/layouts/default"
 export default {
   name: "Drivers",
   computed: {
     drivers() {
       return this.$store.getters["drivers/getDrivers"];
     },
+  },
+  created() {
+    this.$emit('update:layout', LayoutDefault);
   },
 };
 </script>

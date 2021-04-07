@@ -1,11 +1,8 @@
 <template>
   <div id="carousel-section" class="position-relative">
-    <mdb-carousel
+    <UiCarousel
       :items="carouselItems"
-      :interval="4000"
-      slide
-      controlls
-    ></mdb-carousel>
+    ></UiCarousel>
     <div class="timer-cont">
       <div class="d-flex flex-column flex-md-row flex-center">
         <div class="timer mt-1">
@@ -20,7 +17,7 @@
 </template>
 
 <script>
-import { mdbCarousel } from 'mdbvue';
+import UiCarousel from '@/components/UI/PostCarousel'
 import Timer from "../UI/Timer";
 import moment from "moment";
 
@@ -38,7 +35,7 @@ export default {
   },
   components: {
     Timer,
-    mdbCarousel,
+    UiCarousel,
   },
   computed: {
     f3Fixtures() {
@@ -83,15 +80,7 @@ export default {
       return results;
     },
     carouselItems() {
-      let items = []
-      this.$store.getters["carousel/getImages"].forEach((carouselItem) => {
-        let item = {
-          img: true,
-          src: carouselItem.url,
-        };
-        items.push(item);
-      });
-      return items;
+      return this.$store.getters["carousel/getImages"];
     },
   },
 };

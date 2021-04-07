@@ -24,6 +24,7 @@
 <script>
 import { auth } from "../../firebase";
 import { mdbIcon } from "mdbvue";
+import Layout from "@/layouts/admin"
 
 export default {
   methods: {
@@ -35,6 +36,9 @@ export default {
   },
   components: {
     mdbIcon,
+  },
+  created() {
+    this.$emit('update:layout', Layout);
   },
 };
 </script>

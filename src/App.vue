@@ -1,20 +1,19 @@
 <template>
   <div id="app">
-    <loader></loader>
-    <router-view />
-    <mailing-model></mailing-model>
-    <Footer></Footer>
+    <component :is="layout">
+      <router-view :layout.sync="layout"/>
+    </component>
   </div>
 </template>
 
 <script>
-import Footer from "@/components/Header-footer/Footer";
-import MailingModel from "@/components/Modals/MailingListModal";
 
 export default {
-  components: {
-    Footer,
-    MailingModel,
+  name: 'App',
+  data() {
+    return {
+      layout: 'div',
+    };
   },
   created() {
     this.$store.dispatch("posts/setPosts");

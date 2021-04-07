@@ -12,6 +12,7 @@
 import Carousel from "@/components/PageComponents/Carousel.vue";
 import Latest from "@/components/PageComponents/Latest.vue";
 import Calendar from "@/components/PageComponents/Calendar.vue";
+import LayoutDefault from "@/layouts/default"
 
 export default {
   name: "Home",
@@ -19,6 +20,9 @@ export default {
     Carousel,
     Latest,
     Calendar,
+  },
+  created() {
+    this.$emit('update:layout', LayoutDefault);
   },
 };
 </script>

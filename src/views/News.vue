@@ -56,6 +56,7 @@
 import { mdbIcon, mdbBtn } from "mdbvue";
 import moment from "moment";
 import { imageCollection } from "../../firebase";
+import LayoutDefault from '@/layouts/default'
 // @ is an alias to /src
 
 export default {
@@ -149,6 +150,7 @@ export default {
   created() {
     this.isActive = "all";
     console.log(this.years);
+    this.$emit('update:layout', LayoutDefault);
   },
   mounted() {
     setTimeout(() => {

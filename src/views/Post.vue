@@ -28,6 +28,7 @@
 
 <script>
 import moment from "moment";
+import LayoutDefault from "@/layouts/default"
 
 export default {
   name: "News",
@@ -40,6 +41,7 @@ export default {
     this.$store.dispatch("posts/setPosts");
     let slug = this.$route.params.slug;
     this.$store.dispatch("posts/setPostSlug", slug);
+    this.$emit('update:layout', LayoutDefault);
   },
   destroyed() {
     this.$store.commit("posts/clearPost");

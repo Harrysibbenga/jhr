@@ -23,7 +23,7 @@ import 'hooper/dist/hooper.css';
 import moment from "moment";
 
 export default {
-  name: 'App',
+  name: 'CalenderCarousel',
   components: {
     Hooper,
     Slide
@@ -35,11 +35,18 @@ export default {
       }
   },
   data() {
-    return {
-      hooperSettings: {
-        itemsToShow: 3.5,
-      }
-    };
+      return {
+        hooperSettings: {
+          breakpoints: {
+            300: {
+              itemsToShow: 2.5,
+            },
+            960: {
+              itemsToShow: 3.5,
+            },
+        }
+      },
+    }
   },
   filters: {
     formatDate(val) {

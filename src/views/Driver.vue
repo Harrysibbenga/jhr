@@ -120,6 +120,8 @@
 
 <script>
 import { mdbIcon } from "mdbvue";
+import LayoutDefault from "@/layouts/default"
+
 export default {
   name: "Driver",
   components: {
@@ -133,6 +135,7 @@ export default {
   created() {
     let id = this.$route.params.id;
     this.$store.dispatch("drivers/setDriver", id);
+    this.$emit('update:layout', LayoutDefault);
   },
   destroyed() {
     this.$store.commit("drivers/clearDriver");

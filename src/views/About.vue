@@ -19,11 +19,16 @@
 </template>
 
 <script>
+import LayoutDefault from "@/layouts/default"
+
 export default {
   computed: {
     about() {
       return this.$store.getters["about/getContent"];
     },
+  },
+  created() {
+    this.$emit('update:layout', LayoutDefault);
   },
 };
 </script>
