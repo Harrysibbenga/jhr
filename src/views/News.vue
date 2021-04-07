@@ -3,8 +3,7 @@
     <Header></Header>
     <div id="news">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-12 d-flex flex-row py-5">
+        <div class="row d-flex flex-row py-5 flex-center">
             <button class="btn" :class="{ active: isActive == 'all' }" @click="filter('all')">All</button>
             <button
               v-for="(year, index) in years"
@@ -13,7 +12,6 @@
               :class="{ active: isActive == year }"
               @click="filter(year)"
             >{{year}}</button>
-          </div>
         </div>
         <transition name="fade">
           <div class="row" v-if="transition">
