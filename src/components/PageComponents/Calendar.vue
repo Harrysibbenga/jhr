@@ -1,16 +1,8 @@
 <template>
   <div id="calendar" class="mb-3">
-    <div class="container bg-dark pb-5">
+    <div class="container-fluid bg-dark py-5">
       <div class="row position-relative mb-5 pb-5">
         <Timer />
-      </div>
-      <div class="row py-5">
-        <div class="col-12">
-          <h4
-            class="text-white"
-          >F3 Calendar</h4>
-          <UiCarousel :calendar="f3Check"/>
-        </div>
       </div>
        <div class="row py-5">
         <div class="col-12">
@@ -18,6 +10,14 @@
             class="text-white"
           >F4 Calendar</h4>
           <UiCarousel :calendar="f4Check"/>
+        </div>
+      </div>
+      <div class="row py-5">
+        <div class="col-12">
+          <h4
+            class="text-white"
+          >F3 Calendar</h4>
+          <UiCarousel :calendar="f3Check"/>
         </div>
       </div>
     </div>

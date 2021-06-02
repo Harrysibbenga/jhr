@@ -2,13 +2,13 @@
   <div>
     <mdb-container>
       <mdb-row>
-        <mdb-col class="text-center pt-2">
+        <mdb-col class="text-center pt-2" col="12">
           <img v-if="post.url" :src="post.url" :alt="img.alt" class="img-fluid" />
 
           <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
         </mdb-col>
 
-        <mdb-col>
+        <mdb-col col="12">
           <form @submit.prevent="submitForm" class="pt-2">
             <div class="row">
               <div class="md-form col-4 p-0">
@@ -28,10 +28,35 @@
               <mdb-input label="Excerpt" inline v-model.trim="post.excerpt" />
             </div>
 
-            <mdb-col>
-              <app-editor2 :content.sync="post.content"></app-editor2>
-              <mdb-btn color="primary" type="submit">Add Post</mdb-btn>
-            </mdb-col>
+            <mdb-row>
+              <h3>Gallery images</h3>
+              <mdb-col col="12">
+                <ui-multi-upload :images.sync="post.gallery"></ui-multi-upload>
+              </mdb-col>
+              <mdb-row v-if="post.gallery.length > 0">
+                <mdb-col v-for="(item, index) in post.gallery" :key="index" col="4">
+                  <img :src="item.url" :alt="item.alt"  class="img-fluid">
+                  <mdb-btn @click="removeImage(index, post.gallery)">Delete</mdb-btn>
+                </mdb-col>
+              </mdb-row>
+            </mdb-row>
+
+            <mdb-row class="pt-3">
+              <h3>Post content</h3>
+              <mdb-col col="12">
+                <app-editor2 :content.sync="post.content"></app-editor2>
+              </mdb-col>
+            </mdb-row>
+
+             <mdb-row class="pt-3">
+              <h3>Quotes</h3>
+              <mdb-col col="12">
+                <app-editor2 :content.sync="post.quoteContent"></app-editor2>
+              </mdb-col>
+              <mdb-col col="12">
+                <mdb-btn color="primary" type="submit">Add Post</mdb-btn>
+              </mdb-col>
+            </mdb-row>
           </form>
         </mdb-col>
       </mdb-row>
@@ -113,8 +138,30 @@
           </div>
 
           <div class="md-form">
-            <app-editor2 :content.sync="clickedPost.content"></app-editor2>
-          </div>
+            <mdb-row>
+
+            </mdb-row>
+              <h3>Gallery images</h3>
+              <mdb-col col="12">
+                <ui-multi-upload :images.sync="clickedPost.gallery"></ui-multi-upload>
+              </mdb-col>
+              <mdb-row v-if="clickedPost.gallery.length > 0">
+                <mdb-col v-for="(item, index) in clickedPost.gallery" :key="index" col="12">
+                  <img :src="item.url" :alt="item.alt"  class="img-fluid">
+                  <mdb-btn @click="removeImage(index, clickedPost.gallery)">Delete</mdb-btn>
+                </mdb-col>
+              </mdb-row>
+            </div>
+
+            <div class="md-form">
+              <h3>Post content</h3>
+              <app-editor2 :content.sync="clickedPost.content"></app-editor2>
+            </div>
+
+             <div class="md-form">
+              <h3>Quotes</h3>
+              <app-editor2 :content.sync="clickedPost.quoteContent"></app-editor2>
+            </div>
         </form>
       </mdb-modal-body>
       <mdb-container>
@@ -235,7 +282,11 @@ import {
   mdbModalBody,
   mdbModalFooter,
   mdbModal,
+  mdbCol,
+  mdbRow
 } from "mdbvue";
+
+import uiMultiUpload from "../UI/MultiUpload";
 
 export default {
   data() {
@@ -249,6 +300,8 @@ export default {
         year: "",
         imgId: "",
         url: "",
+        quoteContent:'',
+        gallery: [],
       },
       pageNumber: 0,
       msg: "",
@@ -267,6 +320,8 @@ export default {
         date: "",
         content: "",
         year: "",
+        quoteContent:'',
+        gallery: [],
       },
       existsModal: false,
       uploadImage: false,
@@ -298,6 +353,9 @@ export default {
     mdbModalBody,
     mdbModalFooter,
     mdbModal,
+    mdbCol,
+    mdbRow,
+    uiMultiUpload
   },
   computed: {
     posts() {
@@ -331,6 +389,8 @@ export default {
         year: "",
         imgId: "",
         url: "",
+        quoteContent: '',
+        gallery: [],
       };
       this.file = "";
       this.img = {
@@ -369,6 +429,8 @@ export default {
           createdOn: new Date(),
           imgId: this.post.imgId,
           url: this.post.url,
+          quoteContent: this.post.quoteContent,
+          gallery: this.post.gallery
         })
         .then(() => {
           this.reset();
@@ -453,6 +515,10 @@ export default {
       this.type = "";
       this.file = "";
       this.img.alt = "";
+    },
+    removeImage(img, images){
+      let index = images.indexOf(img)
+      images.splice(index, 1)
     },
     confirmUse() {
       if (this.type == "new") {
@@ -557,6 +623,8 @@ export default {
       this.clickedPost.year = post.year;
       this.clickedPost.url = post.url;
       this.clickedPost.imgId = post.imgId;
+      this.clickedPost.quoteContent = post.quoteContent,
+      this.clickedPost.gallery = post.gallery
     },
     cancelEdit() {
       this.clickedPost = {
@@ -569,6 +637,8 @@ export default {
         year: "",
         url: "",
         imgId: "",
+        quoteContent: '',
+        gallery: []
       };
       this.editModal = false;
     },
@@ -603,6 +673,8 @@ export default {
           createdOn: new Date(),
           imgId: this.clickedPost.imgId,
           url: this.clickedPost.url,
+          quoteContent: this.clickedPost.quoteContent,
+          gallery: this.clickedPost.gallery
         })
         .then(() => {
           this.cancelEdit();

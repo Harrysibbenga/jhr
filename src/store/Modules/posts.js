@@ -73,6 +73,16 @@ const posts = {
         querySnapshot.forEach((doc) => {
           let post = doc.data();
           post.id = doc.id;
+          if (!post.gallery) {
+            postsCollection.doc(post.id).update({
+              gallery: []
+            })
+          }
+          if (!post.quoteContent) {
+            postsCollection.doc(post.id).update({
+              quoteContent: ''
+            })
+          }
           postsArray.push(post);
         });
         commit("setPosts", postsArray);

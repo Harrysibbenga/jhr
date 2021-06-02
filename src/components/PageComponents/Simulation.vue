@@ -7,6 +7,7 @@
         </div>
         <div class="col-12 col-md-7 col-lg-6 m-auto p-5 pl-xl-0">
           <div class="text-center">
+              <h2 class="pb-3 text-white">In-house race simulator</h2>
               <p class="text-white">{{ content }}</p>
               <router-link to="/simulator" class="text-danger">More info</router-link>
           </div>

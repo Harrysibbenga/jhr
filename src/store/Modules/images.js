@@ -100,6 +100,54 @@ const images = {
                 }
             );
         },
+        // eslint-disable-next-line no-empty-pattern
+        singleUpload({}, payload) {
+            return new Promise((resolve, reject) => {
+                let file = payload.file
+                let alt = payload.alt
+                let storageRef = storage.ref("images/" + file.name);
+                let uploadTask = storageRef.put(file);
+                
+                uploadTask.on(
+                    "state_changed",
+                    () => {
+                        // snapshot
+                    },
+                    () => {
+                        // Handle unsuccessful uploads
+                    },
+                    () => {
+                        // Handle successful uploads on complete
+                        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+                            imageCollection
+                                .add({
+                                    name: file.name,
+                                    createdOn: new Date(),
+                                    url: downloadURL,
+                                    alt: alt
+                                })
+                                .then(doc => {
+                                    let id = doc.id
+                                    imageCollection
+                                        .doc(id)
+                                        .get()
+                                        .then(doc => {
+                                            let img = doc.data()
+                                            img.id = id
+                                            resolve(img)
+                                        })
+                                        .catch(err => {
+                                            reject(err)
+                                        });
+                                })
+                                .catch(err => {
+                                    reject(err)
+                                });
+                        });
+                    }
+                );
+            })
+        },
         setImages({
             commit
         }) {
