@@ -1,0 +1,54 @@
+[debug] [2021-08-03T09:38:18.585Z] ----------------------------------------------------------------------
+[debug] [2021-08-03T09:38:18.587Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2021-08-03T09:38:18.587Z] CLI Version:   9.16.0
+[debug] [2021-08-03T09:38:18.587Z] Platform:      darwin
+[debug] [2021-08-03T09:38:18.588Z] Node Version:  v14.11.0
+[debug] [2021-08-03T09:38:18.589Z] Time:          Tue Aug 03 2021 10:38:18 GMT+0100 (British Summer Time)
+[debug] [2021-08-03T09:38:18.589Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-08-03T09:38:18.641Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-08-03T09:38:18.641Z] > authorizing via signed-in user (torque.webdev@gmail.com)
+[debug] [2021-08-03T09:38:18.641Z] [iam] checking project jhr-developments-c5bba for permissions ["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2021-08-03T09:38:18.643Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-08-03T09:38:18.643Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-08-03T09:38:18.781Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Tue, 03 Aug 2021 09:38:18 GMT","pragma":"no-cache","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-03T09:38:18.808Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/jhr-developments-c5bba:testIamPermissions  
+ {"permissions":["datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2021-08-03T09:38:19.427Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 03 Aug 2021 09:38:19 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=541","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-03T09:38:19.430Z] > refreshing access token with scopes: []
+[debug] [2021-08-03T09:38:19.430Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-08-03T09:38:19.516Z] <<< HTTP RESPONSE 200 {"date":"Tue, 03 Aug 2021 09:38:19 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-03T09:38:19.549Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/jhr-developments-c5bba [none]
+[debug] [2021-08-03T09:38:19.743Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/jhr-developments-c5bba 200
+[debug] [2021-08-03T09:38:19.744Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/jhr-developments-c5bba {"projectId":"jhr-developments-c5bba","projectNumber":"486654078478","displayName":"JHR Developments","name":"projects/jhr-developments-c5bba","resources":{"hostingSite":"jhr-developments-c5bba","realtimeDatabaseInstance":"jhr-developments-c5bba","storageBucket":"jhr-developments-c5bba.appspot.com","locationId":"europe-west"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'jhr-developments-c5bba'...
+[info] 
+[info] i  deploying storage, firestore, hosting 
+[debug] [2021-08-03T09:38:19.746Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-08-03T09:38:19.747Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-08-03T09:38:19.819Z] <<< HTTP RESPONSE 200 {"date":"Tue, 03 Aug 2021 09:38:19 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-03T09:38:19.851Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/jhr-developments-c5bba  
+ 
+[debug] [2021-08-03T09:38:20.013Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 03 Aug 2021 09:38:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2021-08-03T09:38:20.015Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/jhr-developments-c5bba:test  
+ {"source":{"files":[{"name":"storage.rules","content":"service firebase.storage {\n  match /b/{bucket}/o {\n    match /{allPaths=**} {\n      allow read;\n      allow write: if request.auth!=null;\n    }\n  }\n}\n"}]}}
+[debug] [2021-08-03T09:38:20.714Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 03 Aug 2021 09:38:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] ⚠  [W] undefined:undefined - Ruleset uses old version (version [1]). Please update to the latest version (version [2]). 
+[info] ✔  firebase.storage: rules file storage.rules compiled successfully 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2021-08-03T09:38:20.720Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/jhr-developments-c5bba:test  
+ {"source":{"files":[{"name":"firestore.rules","content":"service cloud.firestore {\n  match /databases/{database}/documents {\n    match /{document=**} {\n      allow read;\n      allow write: if request.auth!=null;\n    }\n  }\n}\n"}]}}
+[debug] [2021-08-03T09:38:21.474Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 03 Aug 2021 09:38:21 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] ⚠  [W] undefined:undefined - Ruleset uses old version (version [1]). Please update to the latest version (version [2]). 
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2021-08-03T09:38:21.478Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/jhr-developments-c5bba/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2021-08-03T09:38:22.765Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 03 Aug 2021 09:38:22 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-08-03T09:38:22.766Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/jhr-developments-c5bba/releases?pageSize=10&pageToken=  
+ 

@@ -33,7 +33,7 @@
           <b-navbar-nav class="d-md-flex justify-content-md-around text-center" v-if="slideRight">
             <b-nav-item to="/simulator" class="simulator">Simulator</b-nav-item>
 
-            <b-nav-item to="/f3" class="f3">F3</b-nav-item>
+            <b-nav-item to="/gb3" class="f3">GB3</b-nav-item>
 
             <b-nav-item to="/f4" class="f4">F4</b-nav-item>
           </b-navbar-nav>

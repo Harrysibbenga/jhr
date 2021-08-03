@@ -1,7 +1,7 @@
 <template>
   <div>
     <mdb-container>
-      <h3 class="pb-3 text-center">F3 Calendar</h3>
+      <h3 class="pb-3 text-center">GB3 Calendar</h3>
       <mdb-row>
         <mdb-col class="pt-2">
           <mdb-btn color="primary" class="ml-0" @click="addCircuitModel = true">Add circuit</mdb-btn>

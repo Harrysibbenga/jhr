@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// Views 
+// Views
 import Home from "../views/Home.vue";
 import About from "../views/About.vue";
 import News from "../views/News.vue";
@@ -9,10 +9,10 @@ import Login from "../views/Login.vue";
 import F3 from "../views/F3.vue";
 import F4 from "../views/F4.vue";
 import Dashboard from "../views/Dashboard.vue";
-import Simulator from "../views/Simulator.vue"
+import Simulator from "../views/Simulator.vue";
 import Driver from "../views/Drivers";
 import DriverProfile from "../views/Driver";
-// Dashboard 
+// Dashboard
 import Welcome from "@/components/Dashboard/Welcome";
 import Calendars from "@/components/Dashboard/Calendars";
 import Posts from "@/components/Dashboard/Posts";
@@ -23,16 +23,14 @@ import Carousel from "@/components/Dashboard/Carousel";
 import Gallery from "@/components/Dashboard/Gallery";
 import Images from "@/components/Dashboard/Images";
 import Circuits from "@/components/Dashboard/Circuits";
-import Pages from "@/components/Dashboard/Pages"
-// Page edits 
-import AboutEdit from "@/components/Pages/About"
-import SimulatorEdit from "@/components/Pages/Simulator"
-import F3Edit from "@/components/Pages/F3"
-import F4Edit from "@/components/Pages/F4"
+import Pages from "@/components/Dashboard/Pages";
+// Page edits
+import AboutEdit from "@/components/Pages/About";
+import SimulatorEdit from "@/components/Pages/Simulator";
+import F3Edit from "@/components/Pages/F3";
+import F4Edit from "@/components/Pages/F4";
 
-import {
-  auth
-} from "../../firebase";
+import { auth } from "../../firebase";
 
 import store from "../store/store";
 
@@ -41,7 +39,8 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [{
+  routes: [
+    {
       path: "/",
       name: "home",
       component: Home,
@@ -70,7 +69,8 @@ const router = new VueRouter({
       path: "/simulator",
       name: "simulator",
       component: Simulator,
-    }, {
+    },
+    {
       path: "/post/:slug",
       name: "post",
       component: Post,
@@ -81,18 +81,20 @@ const router = new VueRouter({
       component: Login,
     },
     {
-      path: "/f3",
-      name: "F3",
+      path: "/gb3",
+      name: "Gb3",
       component: F3,
     },
     {
       path: "/f4",
       name: "F4",
       component: F4,
-    }, {
+    },
+    {
       path: "/dashboard",
       component: Dashboard,
-      children: [{
+      children: [
+        {
           path: "/",
           component: Welcome,
         },
@@ -103,7 +105,8 @@ const router = new VueRouter({
         {
           path: "calendars",
           component: Calendars,
-          children: [{
+          children: [
+            {
               path: "/",
               component: Formula_3,
             },
@@ -124,7 +127,8 @@ const router = new VueRouter({
         {
           path: "gallery",
           component: Gallery,
-          children: [{
+          children: [
+            {
               path: "/",
               component: Images,
             },
@@ -135,9 +139,10 @@ const router = new VueRouter({
           ],
         },
         {
-          path: 'pages',
+          path: "pages",
           component: Pages,
-          children: [{
+          children: [
+            {
               path: "/",
               component: AboutEdit,
             },
@@ -146,15 +151,15 @@ const router = new VueRouter({
               component: SimulatorEdit,
             },
             {
-              path: "f3",
+              path: "gb3",
               component: F3Edit,
             },
             {
               path: "f4",
               component: F4Edit,
-            }
-          ]
-        }
+            },
+          ],
+        },
       ],
       meta: {
         requiresAuth: true,
@@ -162,9 +167,9 @@ const router = new VueRouter({
     },
   ],
   // eslint-disable-next-line no-unused-vars
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 };
-  }
+  },
 });
 
 router.beforeEach((to, from, next) => {

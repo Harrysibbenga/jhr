@@ -8,7 +8,7 @@
                 class="img-fluid d-none d-md-block"
             />
             <div class="mask rgba-black-strong"></div>
-            <div class="border border-light w-100 text-center text-white pt-3">
+            <div class="border border-light w-100 text-center bg-secondary text-white pt-3">
                 <h5 class="track">{{ fixture.circuit.title }}</h5>
                 <p class="date">{{ fixture.date|formatDate }}</p>
             </div>
@@ -42,7 +42,10 @@ export default {
               itemsToShow: 2.5,
             },
             960: {
-              itemsToShow: 3.5,
+              itemsToShow: 4.5,
+            },
+            1200: {
+              itemsToShow: 6,
             },
         }
       },
@@ -59,3 +62,9 @@ export default {
   },
 };
 </script>
+
+<style>
+  .hooper-indicator:hover, .hooper-indicator.is-active {
+    background-color: red;
+}
+</style>

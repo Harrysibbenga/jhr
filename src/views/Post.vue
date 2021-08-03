@@ -21,13 +21,13 @@
         <div class="row">
           <div class="col-12 pt-3 text-justify" v-html="post.content"></div>
         </div>
-        <div class="row" v-if="post.gallery.length > 0">
-          <div class="col-4" v-for="(item, index) in post.gallery" :key="index">
+        <div class="row py-3" v-if="post.gallery.length > 0">
+          <div class="col-4 py-2" v-for="(item, index) in post.gallery" :key="index">
             <img :src="item.url" :alt="item.alt" class="img-fluid">
           </div>
         </div>
-        <div class="row">
-          <div class="col-12 pt-3 text-justify bg-info text-white" v-html="post.quoteContent"></div>
+        <div class="row mb-3">
+          <div class="col-12 py-3 text-justify bg-info text-white" v-html="post.quoteContent"></div>
         </div>
       </div>
     </div>

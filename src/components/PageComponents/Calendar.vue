@@ -1,6 +1,6 @@
 <template>
-  <div id="calendar" class="mb-3">
-    <div class="container-fluid bg-dark py-5">
+  <div id="calendar" class="bg-dark">
+    <div class="container-fluid bg-dark padding">
       <div class="row position-relative mb-5 pb-5">
         <Timer />
       </div>
@@ -16,7 +16,7 @@
         <div class="col-12">
           <h4
             class="text-white"
-          >F3 Calendar</h4>
+          >GB3 Calendar</h4>
           <UiCarousel :calendar="f3Check"/>
         </div>
       </div>
@@ -102,5 +102,8 @@ a:hover,
   .border {
     border: none !important;
   }
+}
+.padding {
+  padding: 5rem
 }
 </style>
