@@ -1,23 +1,9 @@
 <template>
   <div id="calendar" class="bg-dark">
     <div class="container-fluid bg-dark padding">
-      <div class="row position-relative mb-5 pb-5">
-        <Timer />
-      </div>
-       <div class="row py-5">
-        <div class="col-12">
-          <h4
-            class="text-white"
-          >F4 Calendar</h4>
-          <UiCarousel :calendar="f4Check"/>
-        </div>
-      </div>
-      <div class="row py-5">
-        <div class="col-12">
-          <h4
-            class="text-white"
-          >GB3 Calendar</h4>
-          <UiCarousel :calendar="f3Check"/>
+      <div class="row">
+        <div v-for="(item, index) in fixtureList" :key="index" class="col-12 col-md-6 col-lg-3 pt-5">
+          <ui-fixture-card :fixture="item"></ui-fixture-card>
         </div>
       </div>
     </div>
@@ -26,42 +12,62 @@
 
 <script>
 import moment from "moment";
-import UiCarousel from '@/components/UI/Carousel'
-import Timer from '@/components/PageComponents/Timer'
+import { cloneDeep } from "lodash"
+import UiFixtureCard from "@/components/UI/fixtureCard";
 
 export default {
   name: "Calendar",
   components: {
-    UiCarousel,
-    Timer
+    UiFixtureCard,
   },
   computed: {
-    f4Fixtures() {
-      return this.$store.getters["formula4/getFixtures"];
+    f4uae() {
+       const f4uae = {
+        latest: this.getLatestFixture(this.$store.getters["f4uae/getFixtures"]),
+        head: this.$store.getters['f4uaePg/getContent'].head,
+        type: 'f4uae'
+      } 
+      return f4uae
     },
-    f3Fixtures() {
-      return this.$store.getters["formula3/getFixtures"];
+    f4brit() {
+      const f4brit = {
+        latest: this.getLatestFixture(this.$store.getters["f4brit/getFixtures"]),
+        head: this.$store.getters['f4britPg/getContent'].head,
+        type: 'f4brit'
+      } 
+      return f4brit
     },
-    f3Check() {
-      let now = new Date(new Date().toDateString());
-      let sorted = this.f3Fixtures;
-      sorted.sort(function(a,b) {
-        if (moment(a.date).toDate() >= now) {
-          return a - b
-        }
-      });
-      return sorted
+    gb4() {
+      const gb4 = {
+        latest: this.getLatestFixture(this.$store.getters["gb4/getFixtures"]),
+        head: this.$store.getters['gb4Pg/getContent'].head,
+        type: 'gb4'
+      } 
+      return gb4
     },
-    f4Check() {
-      let now = new Date(new Date().toDateString());
-      let sorted = this.f4Fixtures;
-      sorted.sort(function(a,b) {
-        if (moment(a.date).toDate() >= now) {
-          return a - b
-        }
-      });
-      return sorted
+    gb3() {
+      const gb3 = {
+        latest: this.getLatestFixture(this.$store.getters["gb3/getFixtures"]),
+        head: this.$store.getters['gb3Pg/getContent'].head,
+        type: 'gb3'
+      } 
+      return gb3
     },
+    fixtureList() {
+      return [this.gb3, this.gb4, this.f4brit, this.f4uae]
+    }
+  },
+  methods: {
+    getLatestFixture(fixtures) {
+      const now = moment().format()
+      const copy = cloneDeep(fixtures)
+      let events = copy.filter(item => now <= moment(item.date).format())
+      if (events.length <= 0) {
+        return events = fixtures[-1]
+      }
+      console.log(events)
+      return events[0]
+    }
   },
   filters: {
     formatDate(val) {
@@ -104,6 +110,6 @@ a:hover,
   }
 }
 .padding {
-  padding: 5rem
+  padding: 5rem;
 }
 </style>

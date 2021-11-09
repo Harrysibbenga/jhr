@@ -1,23 +1,23 @@
 <template>
   <div id="carousel-section">
-    <UiCarousel
+    <UiPostCarousel
       :items="posts"
       :type="'post'"
-    ></UiCarousel>
+    ></UiPostCarousel>
   </div>
 </template>
 
 <script>
-import UiCarousel from '@/components/UI/PostCarousel'
+import UiPostCarousel from '@/components/UI/PostCarousel'
 
 export default {
   name: "Carousel",
   components: {
-    UiCarousel,
+    UiPostCarousel,
   },
   computed: {
     posts() {
-      return this.$store.getters["posts/getPosts"].slice(0, 4);
+      return this.$store.getters["posts/getPublishedPosts"].slice(0, 4);
     },
   },
 };

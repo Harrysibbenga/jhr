@@ -4,6 +4,7 @@
     <Carousel class="position-relative"></Carousel>
     <Simulation></Simulation>
     <Calendar></Calendar>
+    <Twitter></Twitter>
   </div>
 </template>
 
@@ -12,7 +13,8 @@
 import Carousel from "@/components/PageComponents/Carousel.vue";
 import Simulation from "@/components/PageComponents/Simulation.vue";
 import Calendar from "@/components/PageComponents/Calendar.vue";
-import LayoutDefault from "@/layouts/default"
+import Twitter from "@/components/PageComponents/Twitter.vue";
+import LayoutDefault from "@/layouts/default";
 
 export default {
   name: "Home",
@@ -20,6 +22,7 @@ export default {
     Carousel,
     Simulation,
     Calendar,
+    Twitter
   },
   created() {
     this.$emit('update:layout', LayoutDefault);

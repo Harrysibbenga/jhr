@@ -133,9 +133,4 @@ export default {
 .timer {
   width: 100%;
 }
-@media (min-width: 768px) {
-  .timer {
-    width: 350px;
-  }
-}
 </style>

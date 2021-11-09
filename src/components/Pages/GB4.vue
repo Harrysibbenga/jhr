@@ -1,13 +1,25 @@
 <template>
   <div>
     <mdb-container>
+        <h2>Fixture Headline Image</h2>
+        <mdb-row>
+          <helpers-image-handler :image-list="images" :image.sync="f3.head"></helpers-image-handler>
+        </mdb-row>
       <mdb-row>
-        <helpers-image-handler :image.sync="about.img" :imageList="images"></helpers-image-handler>
+        <mdb-col class="text-center pt-2">
+          <helpers-image-handler :image-list="images" :image.sync="f3.img_1"></helpers-image-handler>
+        </mdb-col>
+        <mdb-col class="text-center pt-2">
+          <helpers-image-handler :image-list="images" :image.sync="f3.img_2"></helpers-image-handler>
+        </mdb-col>
+        <mdb-col class="text-center pt-2">
+          <helpers-image-handler :image-list="images" :image.sync="f3.img_3"></helpers-image-handler>
+        </mdb-col>
       </mdb-row>
 
       <form @submit.prevent="submitForm" class="pt-2 row">
         <mdb-col>
-          <app-editor2 :content.sync="about.content"></app-editor2>
+          <app-editor2 :content.sync="f3.content"></app-editor2>
           <mdb-btn color="primary" type="submit">Update Content</mdb-btn>
         </mdb-col>
       </form>
@@ -26,18 +38,30 @@
 </template>
 
 <script>
-import { aboutPage } from "../../../firebase";
+import { gb4Pg } from "../../../firebase";
 import {
   mdbBtn,
   mdbContainer,
   mdbCol,
-  mdbRow
+  mdbRow,
 } from "mdbvue";
 export default {
   data() {
     return {
-      about: {
-        img: {
+      f3: {
+        head: {
+          url: '',
+          alt: '',
+        },
+        img_1: {
+          url: "",
+          alt: "",
+        },
+        img_2: {
+          url: "",
+          alt: "",
+        },
+        img_3: {
           url: "",
           alt: "",
         },
@@ -55,11 +79,11 @@ export default {
     mdbBtn,
     mdbContainer,
     mdbCol,
-    mdbRow
+    mdbRow,
   },
   computed: {
-    aboutContent() {
-      return this.$store.getters["about/getContent"];
+    f3Content() {
+      return this.$store.getters["gb4Pg/getContent"];
     },
     images() {
       return this.$store.getters["images/getImages"];
@@ -67,22 +91,29 @@ export default {
   },
   methods: {
     reset() {
-      this.about = {
-        id: this.aboutContent.id,
-        img: {
-          url: this.aboutContent.url,
-          alt: this.aboutContent.alt
-        },
-        content: this.aboutContent.content
-      }
+      this.f3 = this.f3Content;
     },
     updateContent() {
-      aboutPage
-        .doc(this.about.id)
+      gb4Pg
+        .doc(this.f3.id)
         .update({
-          alt: this.about.img.alt,
-          url: this.about.img.url,
-          content: this.about.content,
+          content: this.f3.content,
+           head: {
+            url: this.f3.head.url,
+            alt: this.f3.head.alt,
+          },
+          img_1: {
+            alt: this.f3.img_1.alt,
+            url: this.f3.img_1.url,
+          },
+          img_2: {
+            alt: this.f3.img_2.alt,
+            url: this.f3.img_2.url,
+          },
+          img_3: {
+            alt: this.f3.img_3.alt,
+            url: this.f3.img_3.url,
+          },
         })
         .then(() => {
           this.reset();
@@ -116,14 +147,7 @@ export default {
   },
   created() {
     setTimeout(() => {
-      this.about = {
-        id: this.aboutContent.id,
-        img: {
-          url: this.aboutContent.url,
-          alt: this.aboutContent.alt
-        },
-        content: this.aboutContent.content
-      }
+      this.f3 = this.f3Content;
     }, 2000);
   },
 };

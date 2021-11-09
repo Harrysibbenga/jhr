@@ -8,33 +8,16 @@
             <mdb-container fluid>
               <mdb-row>
                 <mdb-col class="col-3">
-                  <img
-                    v-if="headline.url"
-                    :src="headline.url"
-                    :alt="headline.alt"
-                    class="img-fluid"
-                  />
-
-                  <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
-                  <mdb-btn @click="headlineImage(false)">Headline image</mdb-btn>
+                  <helpers-image-handler :image.sync="headline" :imageList="images" :type="'headline image'"></helpers-image-handler>
                 </mdb-col>
                 <mdb-col class="col-3">
-                  <img v-if="social.url" :src="social.url" :alt="social.alt" class="img-fluid" />
-
-                  <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
-                  <mdb-btn @click="socialImage(false)">Social image</mdb-btn>
+                  <helpers-image-handler :image.sync="social.img" :imageList="images" :type="'social image'"></helpers-image-handler>
                 </mdb-col>
                 <mdb-col class="col-3">
-                  <img v-if="career.url" :src="career.url" :alt="career.alt" class="img-fluid" />
-
-                  <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
-                  <mdb-btn @click="careerImage(false)">Career image</mdb-btn>
+                  <helpers-image-handler :image.sync="career.img" :imageList="images" :type="'career image'"></helpers-image-handler>
                 </mdb-col>
                 <mdb-col class="col-3">
-                  <img v-if="bio.url" :src="bio.url" :alt="bio.alt" class="img-fluid" />
-
-                  <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
-                  <mdb-btn @click="bioImage(false)">Bio image</mdb-btn>
+                  <helpers-image-handler :image.sync="bio.img" :imageList="images" :type="'bio image'"></helpers-image-handler>
                 </mdb-col>
               </mdb-row>
             </mdb-container>
@@ -191,75 +174,6 @@
       </mdb-modal-body>
     </mdb-modal>
 
-    <!-- existsModal -->
-    <mdb-modal size="md" :show="existsModal" @close="existsModal = false">
-      <mdb-modal-header>
-        <mdb-modal-title>Image exists with that name</mdb-modal-title>
-      </mdb-modal-header>
-      <mdb-modal-body>
-        <div class="row col-12 col-md-6 col-lg-4 py-3">
-          <p>Would you like to use this one ?</p>
-        </div>
-        <img :src="img.content.url" :alt="img.content.alt" class="img-fluid" />
-      </mdb-modal-body>
-      <mdb-modal-footer>
-        <mdb-btn color="secondary" size="sm" @click.native="declineUse">No</mdb-btn>
-        <mdb-btn color="primary" size="sm" @click="confirmUse">Yes</mdb-btn>
-      </mdb-modal-footer>
-    </mdb-modal>
-
-    <!-- uploadImage -->
-    <mdb-modal size="md" :show="uploadImage" @close="closeImageUpload">
-      <mdb-modal-header>
-        <mdb-modal-title>Upload image</mdb-modal-title>
-      </mdb-modal-header>
-      <mdb-modal-body>
-        <div class="row">
-          <div class="col-12">
-            <div class="md-form">
-              <mdb-input label="Description" inline v-model.trim="img.alt" />
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="imageInput">Upload</span>
-              </div>
-              <div class="custom-file">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  id="imageInput"
-                  aria-describedby="imageInput"
-                  @change="checkFile($event)"
-                  ref="imageInput"
-                  accept="image/jpeg image/png"
-                />
-                <label
-                  class="custom-file-label"
-                  for="inputGroupFile01"
-                  v-if="file.name"
-                >{{ file.name }}</label>
-                <label class="custom-file-label" for="inputGroupFile01" v-else>Image</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </mdb-modal-body>
-      <mdb-modal-footer>
-        <mdb-btn color="secondary" size="sm" @click.native="closeImageUpload">Close</mdb-btn>
-        <mdb-btn color="primary" size="sm" :disabled="img.alt == ''" @click="saveFile(type)">Save</mdb-btn>
-      </mdb-modal-footer>
-      <transition name="fade">
-        <div
-          v-if="uploadMsg.message != ''"
-          :class="`bg-${uploadMsg.type}`"
-          class="text-white text-center"
-        >
-          <p>{{ uploadMsg.message }}</p>
-        </div>
-      </transition>
-    </mdb-modal>
     <!-- edit modal  -->
     <mdb-modal top position="top" fullHeight direction="top" :show="editModal" @close="cancelEdit">
       <mdb-modal-header>
@@ -273,39 +187,16 @@
               <mdb-container fluid>
                 <mdb-row>
                   <mdb-col class="col-3">
-                    <img
-                      :src="clickedDriver.headline.url"
-                      :alt="clickedDriver.headline.alt"
-                      class="img-fluid"
-                    />
-                    <mdb-btn @click="headlineImage(true)">Headline image</mdb-btn>
+                    <helpers-image-handler :image.sync="clickedDriver.headline" :imageList="images" :type="'headline image'"></helpers-image-handler>
                   </mdb-col>
                   <mdb-col class="col-3">
-                    <img
-                      :src="clickedDriver.social.url"
-                      :alt="clickedDriver.social.alt"
-                      class="img-fluid"
-                    />
-
-                    <mdb-btn @click="socialImage(true)">Social image</mdb-btn>
+                    <helpers-image-handler :image.sync="clickedDriver.social.img" :imageList="images" :type="'social image'"></helpers-image-handler>
                   </mdb-col>
                   <mdb-col class="col-3">
-                    <img
-                      :src="clickedDriver.career.url"
-                      :alt="clickedDriver.career.alt"
-                      class="img-fluid"
-                    />
-
-                    <mdb-btn @click="careerImage(true)">Career image</mdb-btn>
+                    <helpers-image-handler :image.sync="clickedDriver.career.img" :imageList="images" :type="'career image'"></helpers-image-handler>
                   </mdb-col>
                   <mdb-col class="col-3">
-                    <img
-                      :src="clickedDriver.bio.url"
-                      :alt="clickedDriver.bio.alt"
-                      class="img-fluid"
-                    />
-
-                    <mdb-btn @click="bioImage(true)">Bio image</mdb-btn>
+                    <helpers-image-handler :image.sync="clickedDriver.bio.img" :imageList="images" :type="'bio image'"></helpers-image-handler>
                   </mdb-col>
                 </mdb-row>
               </mdb-container>
@@ -427,7 +318,7 @@
 </template>
 
 <script>
-import { driversCollection, imageCollection } from "../../../firebase";
+import { driversCollection } from "../../../firebase";
 import {
   mdbInput,
   mdbBtn,
@@ -446,10 +337,11 @@ export default {
   data() {
     return {
       bio: {
-        url: "",
-        alt: "",
+        img: {
+          url: "",
+          alt: "",
+        },
         content: "",
-        imgId: "",
       },
       firstName: "",
       lastName: "",
@@ -460,18 +352,19 @@ export default {
       headline: {
         url: "",
         alt: "",
-        imgId: "",
       },
       career: {
-        url: "",
-        alt: "",
+        img: {
+          url: "",
+          alt: "",
+        },
         content: "",
-        imgId: "",
       },
       social: {
-        url: "",
-        alt: "",
-        imgId: "",
+        img: {
+          url: "",
+          alt: "",
+        },
         platforms: {
           facebook: "",
           website: "",
@@ -491,10 +384,11 @@ export default {
       clickedDriver: {
         id: "",
         bio: {
-          url: "",
-          alt: "",
+          img: {
+            url: "",
+            alt: "",
+          },
           content: "",
-          imgId: "",
         },
         firstName: "",
         lastName: "",
@@ -505,18 +399,19 @@ export default {
         headline: {
           url: "",
           alt: "",
-          imgId: "",
         },
         career: {
-          url: "",
-          alt: "",
+          img: {
+            url: "",
+            alt: "",
+          },
           content: "",
-          imgId: "",
         },
         social: {
-          url: "",
-          alt: "",
-          imgId: "",
+          img: {
+            url: "",
+            alt: "",
+          },
           platforms: {
             facebook: "",
             website: "",
@@ -587,6 +482,9 @@ export default {
         end = start + this.size;
       return this.drivers.slice(start, end);
     },
+    images() {
+      return this.$store.getters['images/getImages']
+    }
   },
   methods: {
     nextPage() {
@@ -597,10 +495,11 @@ export default {
     },
     reset() {
       this.bio = {
-        url: "",
-        alt: "",
-        content: "",
-        imgId: "",
+        img: {
+          url: "",
+          alt: "",
+        },
+        content: ""
       };
       this.firstName = "";
       this.lastName = "";
@@ -611,17 +510,19 @@ export default {
       this.headline = {
         url: "",
         alt: "",
-        imgId: "",
       };
       this.career = {
-        url: "",
-        alt: "",
+        img: {
+          url: "",
+          alt: "",
+        },
         content: "",
-        imgId: "",
       };
       this.social = {
-        url: "",
-        alt: "",
+        img: {
+          url: "",
+          alt: "",
+        },
         imgId: "",
       };
       this.social.platforms = {
@@ -664,16 +565,31 @@ export default {
       }
       driversCollection
         .add({
-          bio: this.bio,
+          bio: {
+            url: this.bio.img.url,
+            alt: this.bio.img.alt,
+            content: this.bio.content
+          },
           firstName: this.firstName,
           lastName: this.lastName,
           lives: this.lives,
           dob: this.dob,
           raceNumber: this.raceNumber,
           sponsors: this.sponsors,
-          headline: this.headline,
-          career: this.career,
-          social: this.social,
+          headline: {
+            url: this.headline.url,
+            alt: this.headline.alt,
+          },
+          career: {
+            url: this.career.img.url,
+            alt: this.career.img.alt,
+            content: this.career.content
+          },
+          social: {
+            url: this.social.img.url,
+            alt: this.social.img.alt,
+            platforms: this.social.platforms
+          }
         })
         .then(() => {
           this.reset();
@@ -717,283 +633,15 @@ export default {
         this.addDriver();
       }
     },
-    headlineImage(edit) {
-      this.uploadImage = true;
-      this.type = "headline";
-      if (edit) {
-        this.edit = true;
-        this.editModal = false;
-      }
-    },
-    socialImage(edit) {
-      this.uploadImage = true;
-      this.type = "social";
-      if (edit) {
-        this.edit = true;
-        this.editModal = false;
-      }
-    },
-    bioImage(edit) {
-      this.uploadImage = true;
-      this.type = "bio";
-      if (edit) {
-        this.edit = true;
-        this.editModal = false;
-      }
-    },
-    careerImage(edit) {
-      this.uploadImage = true;
-      this.type = "career";
-      if (edit) {
-        this.edit = true;
-        this.editModal = false;
-      }
-    },
-    checkFile(event) {
-      this.file = event.target.files[0];
-      imageCollection
-        .where("name", "==", this.file.name)
-        .get()
-        .then((docs) => {
-          docs.forEach((doc) => {
-            if (doc.exists) {
-              this.existsModal = true;
-              this.uploadImage = false;
-              this.img.content = doc.data();
-              this.img.id = doc.id;
-              return;
-            }
-          });
-        });
-    },
-    saveFile() {
-      if (this.type == "headline") {
-        let payload = {};
-        payload.file = this.file;
-        payload.alt = this.img.alt;
-        this.$store.dispatch("images/uploadImage", payload);
-        if (this.edit) {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.clickedDriver.headline.imgId = this.img.content.id;
-            this.clickedDriver.headline.url = this.img.content.url;
-            this.clickedDriver.headline.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.edit = false;
-            this.type = "";
-            this.file = "";
-            this.editModal = true;
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.headline.imgId = this.img.content.id;
-            this.headline.url = this.img.content.url;
-            this.headline.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.type = "";
-            this.file = "";
-          }, 2000);
-        }
-      } else if (this.type == "social") {
-        let payload = {};
-        payload.file = this.file;
-        payload.alt = this.img.alt;
-        this.img.alt = "";
-        this.$store.dispatch("images/uploadImage", payload);
-        if (this.edit) {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.clickedDriver.social.imgId = this.img.content.id;
-            this.clickedDriver.social.url = this.img.content.url;
-            this.clickedDriver.social.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.type = "";
-            this.edit = false;
-            this.file = "";
-            this.editModal = true;
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.social.imgId = this.img.content.id;
-            this.social.url = this.img.content.url;
-            this.social.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.type = "";
-            this.file = "";
-            this.img.alt = "";
-          }, 2000);
-        }
-      } else if (this.type == "bio") {
-        let payload = {};
-        payload.file = this.file;
-        payload.alt = this.img.alt;
-        this.img.alt = "";
-        this.$store.dispatch("images/uploadImage", payload);
-        if (this.edit) {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.clickedDriver.bio.imgId = this.img.content.id;
-            this.clickedDriver.bio.url = this.img.content.url;
-            this.clickedDriver.bio.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.type = "";
-            this.edit = false;
-            this.file = "";
-            this.editModal = true;
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.bio.imgId = this.img.content.id;
-            this.bio.url = this.img.content.url;
-            this.bio.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.type = "";
-            this.file = "";
-            this.img.alt = "";
-          }, 2000);
-        }
-      } else if (this.type == "career") {
-        let payload = {};
-        payload.file = this.file;
-        payload.alt = this.img.alt;
-        this.img.alt = "";
-        this.$store.dispatch("images/uploadImage", payload);
-        if (this.edit) {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.clickedDriver.career.imgId = this.img.content.id;
-            this.clickedDriver.career.url = this.img.content.url;
-            this.clickedDriver.career.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.type = "";
-            this.edit = false;
-            this.file = "";
-            this.editModal = true;
-          }, 2000);
-        } else {
-          setTimeout(() => {
-            this.img.content = this.updatedImage;
-            this.career.imgId = this.img.content.id;
-            this.career.url = this.img.content.url;
-            this.career.alt = this.img.content.alt;
-            this.uploadImage = false;
-            this.type = "";
-            this.file = "";
-            this.img.alt = "";
-          }, 2000);
-        }
-      }
-    },
-    closeImageUpload() {
-      this.uploadImage = false;
-      this.type = "";
-      this.file = "";
-      this.img.alt = "";
-      if (this.edit) {
-        this.editModal = true;
-      }
-    },
-    confirmUse() {
-      if (this.type == "headline") {
-        if (this.edit) {
-          this.clickedDriver.headline.imgId = this.img.id;
-          this.existsModal = false;
-          this.clickedDriver.headline.url = this.img.content.url;
-          this.clickedDriver.headline.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-          this.editModal = true;
-        } else {
-          this.headline.imgId = this.img.id;
-          this.existsModal = false;
-          this.headline.url = this.img.content.url;
-          this.headline.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-        }
-      } else if (this.type == "social") {
-        if (this.edit) {
-          this.clickedDriver.social.imgId = this.img.id;
-          this.existsModal = false;
-          this.clickedDriver.social.url = this.img.content.url;
-          this.clickedDriver.social.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-          this.editModal = true;
-        } else {
-          this.social.imgId = this.img.id;
-          this.existsModal = false;
-          this.social.url = this.img.content.url;
-          this.social.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-        }
-      } else if (this.type == "bio") {
-        if (this.edit) {
-          this.clickedDriver.bio.imgId = this.img.id;
-          this.existsModal = false;
-          this.clickedDriver.bio.url = this.img.content.url;
-          this.clickedDriver.bio.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-          this.editModal = true;
-        } else {
-          this.bio.imgId = this.img.id;
-          this.existsModal = false;
-          this.bio.url = this.img.content.url;
-          this.bio.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-        }
-      } else if (this.type == "career") {
-        if (this.edit) {
-          this.clickedDriver.career.imgId = this.img.id;
-          this.existsModal = false;
-          this.clickedDriver.career.url = this.img.content.url;
-          this.clickedDriver.career.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-          this.editModal = true;
-        } else {
-          this.career.imgId = this.img.id;
-          this.existsModal = false;
-          this.career.url = this.img.content.url;
-          this.career.alt = this.img.content.alt;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-        }
-      }
-    },
-    declineUse() {
-      this.existsModal = false;
-      this.img.content = "";
-      this.img.id = "";
-      this.type = "";
-      this.file = "";
-      this.img.alt = "";
-      if (this.edit) {
-        this.editModal = true;
-      }
-    },
     editDriver(driver) {
       this.clickedDriver = {
         id: driver.id,
         bio: {
-          url: driver.bio.url,
-          alt: driver.bio.alt,
+          img: {
+            url: driver.bio.url,
+            alt: driver.bio.alt,
+          },
           content: driver.bio.content,
-          imgId: driver.bio.imgId,
         },
         firstName: driver.firstName,
         lastName: driver.lastName,
@@ -1004,18 +652,19 @@ export default {
         headline: {
           url: driver.headline.url,
           alt: driver.headline.alt,
-          imgId: driver.headline.imgId,
         },
         career: {
-          url: driver.career.url,
-          alt: driver.career.alt,
+          img: {
+            url: driver.career.url,
+            alt: driver.career.alt,
+          },
           content: driver.career.content,
-          imgId: driver.career.imgId,
         },
         social: {
-          url: driver.social.url,
-          alt: driver.social.alt,
-          imgId: driver.social.imgId,
+          img: {
+            url: driver.social.url,
+            alt: driver.social.alt,
+          },
           platforms: {
             facebook: driver.social.platforms.facebook,
             website: driver.social.platforms.website,
@@ -1034,10 +683,11 @@ export default {
       this.clickedDriver = {
         id: "",
         bio: {
-          url: "",
-          alt: "",
+          img: {
+            url: "",
+            alt: "",
+          },
           content: "",
-          imgId: "",
         },
         firstName: "",
         lastName: "",
@@ -1048,19 +698,20 @@ export default {
         headline: {
           url: "",
           alt: "",
-          imgId: "",
         },
         career: {
-          url: "",
-          alt: "",
+          img: {
+            url: "",
+            alt: "",
+          },
           content: "",
-          imgId: "",
         },
         social: {
-          url: "",
-          alt: "",
+          img: {
+            url: "",
+            alt: "",
+          },
           content: "",
-          imgId: "",
           platforms: {
             facebook: "",
             website: "",
@@ -1080,16 +731,31 @@ export default {
       driversCollection
         .doc(this.clickedDriver.id)
         .update({
-          bio: this.clickedDriver.bio,
+          bio: {
+            url: this.clickedDriver.bio.img.url,
+            alt: this.clickedDriver.bio.img.alt,
+            content: this.clickedDriver.bio.content
+          },
           firstName: this.clickedDriver.firstName,
           lastName: this.clickedDriver.lastName,
           lives: this.clickedDriver.lives,
           dob: this.clickedDriver.dob,
           raceNumber: this.clickedDriver.raceNumber,
           sponsors: this.clickedDriver.sponsors,
-          headline: this.clickedDriver.headline,
-          career: this.clickedDriver.career,
-          social: this.clickedDriver.social,
+          headline: {
+            url: this.clickedDriver.headline.url,
+            alt: this.clickedDriver.headline.alt,
+          },
+          career: {
+            url: this.clickedDriver.career.img.url,
+            alt: this.clickedDriver.career.img.alt,
+            content: this.clickedDriver.career.content
+          },
+          social: {
+            url: this.clickedDriver.social.img.url,
+            alt: this.clickedDriver.social.img.alt,
+            platforms: this.clickedDriver.social.platforms
+          }
         })
         .then(() => {
           this.cancelEdit();

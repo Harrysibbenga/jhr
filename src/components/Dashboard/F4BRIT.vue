@@ -1,7 +1,7 @@
 <template>
   <div>
     <mdb-container>
-      <h3 class="pb-3 text-center">F4 Calendar</h3>
+      <h3 class="pb-3 text-center">F4 BRIT Calendar</h3>
       <mdb-row>
         <mdb-col class="pt-2">
           <mdb-btn color="primary" class="ml-0" @click="addCircuitModel = true">Add circuit</mdb-btn>
@@ -13,13 +13,14 @@
           <form @submit.prevent="submitForm" class="pt-2">
             <div class="row">
               <div class="md-form col-12 col-md-6 col-lg-4" v-if="circuit.title">
-                <img :src="circuit.url" :alt="circuit.alt" />
+                <img :src="circuit.url" :alt="circuit.alt" class="img-fluid"/>
                 <p class="text-center pt-3">{{ circuit.title }}</p>
               </div>
             </div>
             <div class="row">
               <div class="md-form col-12 col-md-6 col-lg-4">
-                <mdb-input type="date" inline v-model.trim="fixture.date" />
+                <mdb-input label="End date" type="date" inline v-model.trim="fixture.date" />
+                <mdb-input label="Display date" type="text" inline v-model.trim="fixture.displayDate" />
               </div>
             </div>
             <mdb-btn color="primary" type="submit" class="ml-0">Add Fixture</mdb-btn>
@@ -94,7 +95,7 @@
       </mdb-modal-header>
       <mdb-modal-body>
         <form @submit.prevent class="p-2">
-          <mdb-col class="text-center pt-2">
+          <mdb-col class="text-center pt-2 col-12 col-md-6 col-lg-4">
             <img v-if="circuit.url" :src="circuit.url" :alt="circuit.alt" class="img-fluid" />
 
             <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
@@ -157,7 +158,7 @@
       </mdb-modal-header>
       <mdb-modal-body>
         <form @submit.prevent class="p-2">
-          <mdb-col class="text-center pt-2">
+          <mdb-col class="text-center pt-2 col-12 col-md-6 col-lg-4">
             <img
               :src="clickedFixture.circuit.url"
               :alt="clickedFixture.circuit.alt"
@@ -172,7 +173,8 @@
           </mdb-col>
 
           <div class="md-form col-12 col-md-6 col-lg-4">
-            <mdb-input type="date" inline v-model.trim="clickedFixture.date" />
+            <mdb-input label="End date" type="date" inline v-model.trim="clickedFixture.date" />
+            <mdb-input label="Display date" type="text" inline v-model.trim="clickedFixture.displayDate" />
           </div>
         </form>
       </mdb-modal-body>
@@ -274,7 +276,7 @@
 import moment from "moment";
 import {
   imageCollection,
-  formula4Collection,
+  f4britCollection,
   circuitsCollection
 } from "../../../firebase";
 import {
@@ -297,7 +299,8 @@ export default {
       fixture: {
         id: "",
         date: "",
-        circuit: {}
+        circuit: {},
+        displayDate: '',
       },
       circuit: {
         id: "",
@@ -308,7 +311,8 @@ export default {
       clickedFixture: {
         id: "",
         date: "",
-        circuit: {}
+        circuit: {},
+        displayDate: '',      
       },
       addCircuitModel: false,
       selCircuitModel: false,
@@ -357,7 +361,7 @@ export default {
   },
   computed: {
     fixtures() {
-      return this.$store.getters["formula4/getFixtures"];
+      return this.$store.getters["f4brit/getFixtures"];
     },
     updatedCircuit() {
       return this.$store.getters["circuits/getCircuit"];
@@ -387,7 +391,8 @@ export default {
       this.fixture = {
         id: "",
         date: "",
-        circuit: {}
+        circuit: {},
+        displayDate: '',
       };
       this.file = "";
       this.img = {
@@ -404,11 +409,12 @@ export default {
       };
     },
     addFixture() {
-      formula4Collection
+      f4britCollection
         .add({
           date: this.fixture.date,
           circuit: this.fixture.circuit,
-          createdOn: new Date()
+          createdOn: new Date(),
+          displayDate: this.fixture.displayDate,
         })
         .then(() => {
           this.reset();
@@ -443,7 +449,7 @@ export default {
           imgId: this.circuit.imgId,
           alt: this.img.content.alt,
           title: this.circuit.title,
-          createdOn: new Date()
+          createdOn: new Date(),
         })
         .then(doc => {
           circuitsCollection
@@ -602,7 +608,7 @@ export default {
       this.deleteModal = false;
     },
     confirmDelete() {
-      formula4Collection
+      f4britCollection
         .doc(this.toDeleteFixture.id)
         .delete()
         .then(() => {
@@ -635,11 +641,14 @@ export default {
       this.editModal = true;
       this.clickedFixture.id = fixture.id;
       this.clickedFixture.date = fixture.date;
+      this.clickedFixture.displayDate = fixture.displayDate
       this.clickedFixture.circuit.title = fixture.circuit.title;
       this.clickedFixture.circuit.id = fixture.circuit.id;
       this.clickedFixture.circuit.imgId = fixture.circuit.imgId;
       this.clickedFixture.circuit.url = fixture.circuit.url;
       this.clickedFixture.circuit.alt = fixture.circuit.alt;
+      
+
     },
     cancelEdit() {
       this.clickedFixture = {
@@ -650,7 +659,8 @@ export default {
           url: "",
           title: "",
           alt: ""
-        }
+        },
+        displayDate: ''
       };
       this.reset();
       this.editModal = false;
@@ -669,10 +679,11 @@ export default {
       if (this.circuit.title !== "") {
         this.clickedFixture.circuit.title = this.circuit.title;
       }
-      formula4Collection
+      f4britCollection
         .doc(this.clickedFixture.id)
         .update({
           date: this.clickedFixture.date,
+          displayDate: this.clickedFixture.displayDate,
           circuit: {
             title: this.clickedFixture.circuit.title,
             id: this.clickedFixture.circuit.id,

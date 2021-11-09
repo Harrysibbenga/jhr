@@ -1,13 +1,13 @@
 <template>
-  <hooper :settings="hooperSettings" class="height-carousel" v-if="type == 'post'">
+  <hooper :settings="hooperSettings" class="height-carousel background" v-if="type == 'post'">
     <slide v-for="(post,index) in items" :key="index">
       <div class="row no-gutters">
         <div class="col-12 col-md-10 col-lg-8 mx-auto">
           <img :src="post.url" :alt="post.alt" class="img-fluid" />
         </div>
-        <div class="col-12 col-lg-4 my-auto p-5 text-container">
+        <div class="col-12 col-lg-4 my-auto p-5">
           <div class="text-center height-content">
-              <h2 class="text-white">{{ post.title }}</h2>
+              <h2 class="text-white h3-responsive">{{ post.title }}</h2>
               <p class="text-white">{{ post.date | formatDate }}</p>
               <router-link :to="`/post/${post.slug}`" class="text-danger">More info</router-link>
           </div>
@@ -18,11 +18,7 @@
     <hooper-pagination slot="hooper-addons"></hooper-pagination>
   </hooper>
 
-  <hooper :settings="hooperSettings" style="height:800px" :hoverPause="false" v-else>
-    <slide v-for="(post,index) in items" :key="index">
-        <img :src="post.url" :alt="post.alt" class="img-fluid" />
-    </slide>
-  </hooper>
+  
 </template>
 
 <script>
@@ -59,6 +55,7 @@ export default {
         shortDrag: false,
         autoPlay: true,
         transition: 500,
+        pauseOnHover: false
       }
     };
   },
@@ -76,42 +73,26 @@ export default {
 
 <style lang="css" scoped>
   .height-carousel {
-    height: 900px !important;
+    height: auto !important;
   }
   .height-content {
-    height: 500px;
+    height: auto;
   }
-  .text-container {
+  .background {
     background-color: rgba(0, 0, 0, 0.7);
   }
 
   @media (min-width: 768px) {
-     .height-carousel {
-      height: 850px !important;
-    }
-  }
-  @media (min-width: 992px) {
-     .height-carousel {
-      height: 500px !important;
-    }
-    .row {
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-    .text-container {
-      background-color: transparent;
-    }
     .height-content {
       height: auto;
     }
   }
-  @media (min-width: 1440px) {
+  @media (min-width: 992px) {
      .height-carousel {
-      height: 800px !important;
+      height: auto !important;
     }
-  }
-  @media (min-width: 1960px) {
-     .height-carousel {
-      height: 1000px !important;
+    .height-content {
+      height: auto;
     }
   }
 </style>

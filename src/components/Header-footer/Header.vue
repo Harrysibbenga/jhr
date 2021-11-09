@@ -8,7 +8,7 @@
         </template>
       </b-navbar-toggle>
 
-      <b-navbar-brand to="/home" v-if="slideDown" class="d-md-none">
+      <b-navbar-brand to="/" v-if="slideDown" class="d-md-none">
         <img src="../../assets/jhr.png" alt="JHR logo" class="img-fluid" width="200px" />
       </b-navbar-brand>
 
@@ -20,6 +20,8 @@
             <b-nav-item to="/news" class="news">News</b-nav-item>
 
             <b-nav-item to="/drivers" class="drivers">Drivers</b-nav-item>
+
+            <b-nav-item to="/simulator" class="simulator">Simulator</b-nav-item>
           </b-navbar-nav>
         </transition>
 
@@ -31,11 +33,15 @@
 
         <transition name="slide-right">
           <b-navbar-nav class="d-md-flex justify-content-md-around text-center" v-if="slideRight">
-            <b-nav-item to="/simulator" class="simulator">Simulator</b-nav-item>
+            
 
-            <b-nav-item to="/gb3" class="f3">GB3</b-nav-item>
+            <b-nav-item to="/gb3" class="gb3">GB3</b-nav-item>
 
-            <b-nav-item to="/f4" class="f4">F4</b-nav-item>
+            <b-nav-item to="/gb4" class="gb4">GB4</b-nav-item>
+
+            <b-nav-item to="/f4brit" class="f4brit">F4 British</b-nav-item>
+
+            <b-nav-item to="/f4uae" class="f4uae">F4 UAE</b-nav-item>
           </b-navbar-nav>
         </transition>
 

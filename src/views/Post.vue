@@ -46,7 +46,6 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("posts/setPosts");
     let slug = this.$route.params.slug;
     this.$store.dispatch("posts/setPostSlug", slug);
     this.$emit('update:layout', LayoutDefault);

@@ -6,8 +6,10 @@ import About from "../views/About.vue";
 import News from "../views/News.vue";
 import Post from "../views/Post.vue";
 import Login from "../views/Login.vue";
-import F3 from "../views/F3.vue";
-import F4 from "../views/F4.vue";
+import GB3 from "../views/GB3.vue";
+import F4UAE from "../views/F4UAE.vue";
+import F4BRIT from "../views/F4BRIT.vue";
+import GB4 from "../views/GB4.vue";
 import Dashboard from "../views/Dashboard.vue";
 import Simulator from "../views/Simulator.vue";
 import Driver from "../views/Drivers";
@@ -17,18 +19,23 @@ import Welcome from "@/components/Dashboard/Welcome";
 import Calendars from "@/components/Dashboard/Calendars";
 import Posts from "@/components/Dashboard/Posts";
 import Drivers from "@/components/Dashboard/Drivers";
-import Formula_3 from "@/components/Dashboard/Formula3";
-import Formula_4 from "@/components/Dashboard/Formula4";
+import Formula_4_BRIT from "@/components/Dashboard/F4BRIT";
+import Formula_4_UAE from "@/components/Dashboard/F4UAE";
+import GB_3 from "@/components/Dashboard/GB3";
+import GB_4 from "@/components/Dashboard/GB4";
 import Carousel from "@/components/Dashboard/Carousel";
 import Gallery from "@/components/Dashboard/Gallery";
 import Images from "@/components/Dashboard/Images";
-import Circuits from "@/components/Dashboard/Circuits";
 import Pages from "@/components/Dashboard/Pages";
+import Circuits from "@/components/Dashboard/Circuits";
+import Videos from "@/components/Dashboard/Videos";
 // Page edits
 import AboutEdit from "@/components/Pages/About";
 import SimulatorEdit from "@/components/Pages/Simulator";
-import F3Edit from "@/components/Pages/F3";
-import F4Edit from "@/components/Pages/F4";
+import GB3Edit from "@/components/Pages/GB3";
+import GB4Edit from "@/components/Pages/GB4";
+import F4BRITEdit from "@/components/Pages/F4BRIT";
+import F4UAEEdit from "@/components/Pages/F4UAE";
 
 import { auth } from "../../firebase";
 
@@ -82,13 +89,23 @@ const router = new VueRouter({
     },
     {
       path: "/gb3",
-      name: "Gb3",
-      component: F3,
+      name: "GB3",
+      component: GB3,
     },
     {
-      path: "/f4",
+      path: "/gb4",
+      name: "GB4",
+      component: GB4,
+    },
+    {
+      path: "/f4brit",
       name: "F4",
-      component: F4,
+      component: F4BRIT,
+    },
+    {
+      path: "/f4uae",
+      name: "F4UAE",
+      component: F4UAE,
     },
     {
       path: "/dashboard",
@@ -108,11 +125,19 @@ const router = new VueRouter({
           children: [
             {
               path: "/",
-              component: Formula_3,
+              component: GB_3,
             },
             {
-              path: "f4",
-              component: Formula_4,
+              path: "gb4",
+              component: GB_4,
+            },
+            {
+              path: "f4brit",
+              component: Formula_4_BRIT,
+            },
+            {
+              path: "f4uae",
+              component: Formula_4_UAE,
             },
           ],
         },
@@ -136,6 +161,10 @@ const router = new VueRouter({
               path: "circuits",
               component: Circuits,
             },
+            {
+              path: "videos",
+              component: Videos,
+            },
           ],
         },
         {
@@ -152,11 +181,19 @@ const router = new VueRouter({
             },
             {
               path: "gb3",
-              component: F3Edit,
+              component: GB3Edit,
             },
             {
-              path: "f4",
-              component: F4Edit,
+              path: "gb4",
+              component: GB4Edit,
+            },
+            {
+              path: "f4brit",
+              component: F4BRITEdit,
+            },
+            {
+              path: "f4uae",
+              component: F4UAEEdit,
             },
           ],
         },

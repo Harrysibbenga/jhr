@@ -38,10 +38,10 @@ import LayoutDefault from "@/layouts/default"
 export default {
   computed: {
     fixtures() {
-      return this.$store.getters["formula4/getFixtures"];
+      return this.$store.getters["f4brit/getFixtures"];
     },
     content() {
-      return this.$store.getters["f4page/getContent"];
+      return this.$store.getters["f4britPg/getContent"];
     },
   },
   created() {

@@ -2,18 +2,11 @@
   <div>
     <mdb-container>
       <mdb-row>
-        <mdb-col class="text-center pt-2" col="12">
-          <img v-if="post.url" :src="post.url" :alt="img.alt" class="img-fluid" />
-
-          <img v-else :src="defaultImage" alt="Placeholder image" class="img-fluid" />
-        </mdb-col>
+        <helpers-image-handler :image.sync="postImage" :imageList="images"></helpers-image-handler>
 
         <mdb-col col="12">
           <form @submit.prevent="submitForm" class="pt-2">
             <div class="row">
-              <div class="md-form col-4 p-0">
-                <mdb-btn color="primary" class="ml-3" inline @click="newImage">Headline Image</mdb-btn>
-              </div>
 
               <div class="md-form col-md-6 col-lg-4">
                 <mdb-input type="date" inline v-model.trim="post.date" />
@@ -56,6 +49,14 @@
               <mdb-col col="12">
                 <mdb-btn color="primary" type="submit">Add Post</mdb-btn>
               </mdb-col>
+
+              
+            </mdb-row>
+
+            <mdb-row>
+              <h2>Schedule post</h2>
+
+              <helpers-scheduling :publish-date.sync="post.published"></helpers-scheduling>
             </mdb-row>
           </form>
         </mdb-col>
@@ -121,9 +122,8 @@
       </mdb-modal-header>
       <mdb-modal-body>
         <form @submit.prevent class="p-2">
-          <img v-if="clickedPost.url" :src="clickedPost.url" class="img-fluid" />
 
-          <mdb-btn @click="changeImage" color="primary">Change image</mdb-btn>
+          <helpers-image-handler :image.sync="clickedImage" :imageList="images"></helpers-image-handler>
 
           <div class="md-form col-md-6 col-lg-4 p-0">
             <mdb-input type="date" inline v-model.trim="clickedPost.date" />
@@ -162,8 +162,15 @@
               <h3>Quotes</h3>
               <app-editor2 :content.sync="clickedPost.quoteContent"></app-editor2>
             </div>
+
+            <mdb-row>
+              <h2>Schedule post</h2>
+
+              <helpers-scheduling :publish-date.sync="clickedPost.published"></helpers-scheduling>
+            </mdb-row>
         </form>
       </mdb-modal-body>
+
       <mdb-container>
         <transition name="fade">
           <div
@@ -196,82 +203,12 @@
         <mdb-btn color="danger" @click="confirmDelete">Delete</mdb-btn>
       </mdb-modal-body>
     </mdb-modal>
-
-    <!-- existsModal -->
-    <mdb-modal size="md" :show="existsModal" @close="existsModal = false">
-      <mdb-modal-header>
-        <mdb-modal-title>Image exists with that name</mdb-modal-title>
-      </mdb-modal-header>
-      <mdb-modal-body>
-        <div class="row col-12 col-md-6 col-lg-4 py-3">
-          <p>Would you like to use this one ?</p>
-        </div>
-        <img :src="img.content.url" :alt="img.content.alt" class="img-fluid" />
-      </mdb-modal-body>
-      <mdb-modal-footer>
-        <mdb-btn color="secondary" size="sm" @click.native="declineUse">No</mdb-btn>
-        <mdb-btn color="primary" size="sm" @click="confirmUse">Yes</mdb-btn>
-      </mdb-modal-footer>
-    </mdb-modal>
-
-    <!-- uploadImage -->
-    <mdb-modal size="md" :show="uploadImage" @close="closeImageUpload">
-      <mdb-modal-header>
-        <mdb-modal-title>Upload image</mdb-modal-title>
-      </mdb-modal-header>
-      <mdb-modal-body>
-        <div class="row">
-          <div class="col-12">
-            <div class="md-form">
-              <mdb-input label="Description" inline v-model.trim="img.alt" />
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="imageInput">Upload</span>
-              </div>
-              <div class="custom-file">
-                <input
-                  type="file"
-                  class="custom-file-input"
-                  id="imageInput"
-                  aria-describedby="imageInput"
-                  @change="checkFile($event)"
-                  ref="imageInput"
-                  accept="image/jpeg image/png"
-                />
-                <label
-                  class="custom-file-label"
-                  for="inputGroupFile01"
-                  v-if="file.name"
-                >{{ file.name }}</label>
-                <label class="custom-file-label" for="inputGroupFile01" v-else>Image</label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </mdb-modal-body>
-      <mdb-modal-footer>
-        <mdb-btn color="secondary" size="sm" @click.native="closeImageUpload">Close</mdb-btn>
-        <mdb-btn color="primary" size="sm" :disabled="img.alt == ''" @click="saveFile(type)">Save</mdb-btn>
-      </mdb-modal-footer>
-      <transition name="fade">
-        <div
-          v-if="uploadMsg.message != ''"
-          :class="`bg-${uploadMsg.type}`"
-          class="text-white text-center"
-        >
-          <p>{{ uploadMsg.message }}</p>
-        </div>
-      </transition>
-    </mdb-modal>
   </div>
 </template>
 
 <script>
 import moment from "moment";
-import { postsCollection, imageCollection } from "../../../firebase";
+import { postsCollection } from "../../../firebase";
 import {
   mdbInput,
   mdbBtn,
@@ -287,6 +224,7 @@ import {
 } from "mdbvue";
 
 import uiMultiUpload from "../UI/MultiUpload";
+import helpersScheduling from "../Helpers/scheduling";
 
 export default {
   data() {
@@ -302,6 +240,14 @@ export default {
         url: "",
         quoteContent:'',
         gallery: [],
+      },
+      postImage: {
+        url: '',
+        alt: ''
+      },
+      clickedImage: {
+        url: '',
+        alt: ''
       },
       pageNumber: 0,
       msg: "",
@@ -355,7 +301,8 @@ export default {
     mdbModal,
     mdbCol,
     mdbRow,
-    uiMultiUpload
+    uiMultiUpload,
+    helpersScheduling
   },
   computed: {
     posts() {
@@ -366,6 +313,9 @@ export default {
     },
     updatedImage() {
       return this.$store.getters["images/getImage"];
+    },
+    images() {
+      return this.$store.getters["images/getImages"];
     },
     pageCount() {
       let l = this.posts.length,
@@ -390,6 +340,7 @@ export default {
         imgId: "",
         url: "",
         quoteContent: '',
+        published: "",
         gallery: [],
       };
       this.file = "";
@@ -414,8 +365,8 @@ export default {
 
       this.post.slug = newSlug.join("-") + "-" + date;
 
-      if (this.post.url == "") {
-        this.post.url = this.defaultImage;
+      if (this.postImage.url == "") {
+        this.postImage.url = this.defaultImage;
       }
 
       postsCollection
@@ -427,10 +378,11 @@ export default {
           content: this.post.content,
           year: this.post.year,
           createdOn: new Date(),
-          imgId: this.post.imgId,
-          url: this.post.url,
+          url: this.postImage.url,
+          alt: this.postImage.alt,
           quoteContent: this.post.quoteContent,
-          gallery: this.post.gallery
+          gallery: this.post.gallery,
+          published: this.post.published
         })
         .then(() => {
           this.reset();
@@ -458,94 +410,9 @@ export default {
           }, 2000);
         });
     },
-    newImage() {
-      this.uploadImage = true;
-      this.type = "new";
-    },
-    checkFile(event) {
-      this.file = event.target.files[0];
-      imageCollection
-        .where("name", "==", this.file.name)
-        .get()
-        .then((docs) => {
-          docs.forEach((doc) => {
-            if (doc.exists) {
-              this.existsModal = true;
-              this.uploadImage = false;
-              this.img.content = doc.data();
-              this.img.id = doc.id;
-              return;
-            }
-          });
-        });
-    },
-    saveFile() {
-      if (this.type == "new") {
-        let payload = {};
-        payload.file = this.file;
-        payload.alt = this.img.alt;
-        this.$store.dispatch("images/uploadImage", payload);
-        setTimeout(() => {
-          this.img.content = this.updatedImage;
-          this.post.imgId = this.img.content.id;
-          this.post.url = this.img.content.url;
-          this.uploadImage = false;
-          this.type = "";
-          this.file.name = "";
-        }, 2000);
-      } else if (this.type == "edit") {
-        let payload = {};
-        payload.file = this.file;
-        payload.alt = this.img.alt;
-        this.img.alt = "";
-        this.$store.dispatch("images/uploadImage", payload);
-        setTimeout(() => {
-          this.img.content = this.updatedImage;
-          this.clickedPost.imgId = this.img.content.id;
-          this.clickedPost.url = this.img.content.url;
-          this.uploadImage = false;
-          this.type = "";
-          this.file = "";
-          this.img.alt = "";
-        }, 2000);
-      }
-    },
-    closeImageUpload() {
-      this.uploadImage = false;
-      this.type = "";
-      this.file = "";
-      this.img.alt = "";
-    },
     removeImage(img, images){
       let index = images.indexOf(img)
       images.splice(index, 1)
-    },
-    confirmUse() {
-      if (this.type == "new") {
-        this.post.imgId = this.img.id;
-        this.existsModal = false;
-        this.post.url = this.img.content.url;
-        this.img.alt = this.img.content.alt;
-        this.type = "";
-        this.file = "";
-        this.img.alt = "";
-      } else if (this.type == "edit") {
-        this.clickedPost.imgId = this.img.id;
-        this.existsModal = false;
-        this.clickedPost.url = this.img.content.url;
-        this.img.alt = this.img.content.alt;
-        this.type = "";
-        this.file = "";
-        this.img.alt = "";
-      }
-    },
-    declineUse() {
-      this.existsModal = false;
-      this.img.content = "";
-      this.img.id = "";
-      this.type = "";
-      this.file = "";
-      this.img.alt = "";
     },
     submitForm() {
       if (this.post.date == "" || this.post.title == "") {
@@ -621,10 +488,10 @@ export default {
       this.clickedPost.date = post.date;
       this.clickedPost.content = post.content;
       this.clickedPost.year = post.year;
-      this.clickedPost.url = post.url;
-      this.clickedPost.imgId = post.imgId;
+      this.clickedImage.url = post.url;
       this.clickedPost.quoteContent = post.quoteContent,
       this.clickedPost.gallery = post.gallery
+      this.clickedPost.published = post.published
     },
     cancelEdit() {
       this.clickedPost = {
@@ -638,9 +505,14 @@ export default {
         url: "",
         imgId: "",
         quoteContent: '',
+        piblished: '',
         gallery: []
       };
       this.editModal = false;
+      this.clickedImage = {
+        url: '',
+        alt: '',
+      }
     },
     changeImage() {
       this.uploadImage = true;
@@ -671,10 +543,10 @@ export default {
           content: this.clickedPost.content,
           year: this.clickedPost.year,
           createdOn: new Date(),
-          imgId: this.clickedPost.imgId,
-          url: this.clickedPost.url,
+          url: this.clickedImage.url,
           quoteContent: this.clickedPost.quoteContent,
-          gallery: this.clickedPost.gallery
+          gallery: this.clickedPost.gallery,
+          published: this.clickedPost.published
         })
         .then(() => {
           this.cancelEdit();
@@ -714,5 +586,3 @@ export default {
   },
 };
 </script>
-
-<style lang="css"></style>
