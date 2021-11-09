@@ -13,6 +13,16 @@
           </div>
           <contact-modal></contact-modal>
         </div>
+        <div col="12">
+          <video 
+              width="100%"
+              height="100%"
+              class="position-relative"
+          >
+              <source :src="sim.displayVid.url" type="video/mp4">
+              Your browser does not support the video tag.
+          </video> 
+        </div>
       </div>
     </div>
   </div>

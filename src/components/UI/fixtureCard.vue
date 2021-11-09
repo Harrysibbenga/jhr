@@ -12,7 +12,7 @@
     </div>
      <mdb-card-image :src="fixture.latest.circuit.url" :alt="fixture.latest.circuit.alt"></mdb-card-image>
     <mdb-card-footer color="bg-white" class="lighten-3 p-0 text-center">
-      <router-link class="btn btn-danger" :to="'/' + fixture.type" color="primary">view full calender</router-link>
+      <router-link class="btn btn-danger" :to="'/' + fixture.type" color="primary">view full calendar</router-link>
     </mdb-card-footer>
   </mdb-card>
 </template>

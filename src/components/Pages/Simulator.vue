@@ -16,6 +16,10 @@
       </mdb-row>
       <form @submit.prevent="submitForm" class="pt-2 row">
         <mdb-col>
+          <h2>Display Video</h2>
+          <helpers-video-handler :video.sync="sim.displayVid" :videoList.sync="videos"></helpers-video-handler>
+        </mdb-col>
+        <mdb-col>
           <mdb-input label="Excerpt" v-model="sim.excerpt"></mdb-input>
           <app-editor2 :content.sync="sim.content"></app-editor2>
           <mdb-btn color="primary" type="submit">Update Content</mdb-btn>
@@ -59,6 +63,10 @@ export default {
         vid: {
           alt: '',
           url: ''
+        },
+        displayVid: {
+          alt: '',
+          url: ''
         }
       },
       msg: {
@@ -95,6 +103,7 @@ export default {
           url: this.simContent.url,
           alt: this.simContent.alt
         },
+        displayVid: this.simContent.displayVid,
         content: this.simContent.content,
         video: this.simContent.video,
         link: this.simContent.link,
@@ -112,7 +121,8 @@ export default {
           video: this.sim.video,
           link: this.sim.link,
           vid: this.sim.vid,
-          excerpt: this.sim.excerpt
+          excerpt: this.sim.excerpt,
+          displayVid: this.sim.displayVid
         })
         .then(() => {
           this.reset();
@@ -157,6 +167,7 @@ export default {
         link: this.simContent.link,
         vid: this.simContent.vid,
         excerpt: this.simContent.excerpt,
+        displayVid: this.simContent.displayVid
       }
     }, 2000);
   },
