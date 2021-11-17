@@ -7,7 +7,7 @@
         </div>
         <div class="col-12 col-lg-4 my-auto p-5">
           <div class="text-center height-content">
-              <h2 class="text-white h3-responsive">{{ post.title }}</h2>
+              <h2 class="text-white h1-responsive">{{ post.title }}</h2>
               <p class="text-white">{{ post.date | formatDate }}</p>
               <router-link :to="`/post/${post.slug}`" class="text-danger">More info</router-link>
           </div>

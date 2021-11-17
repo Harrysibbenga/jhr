@@ -145,7 +145,8 @@ export default {
 
 ul {
   li a {
-    font-size: 1.2rem;
+    font-family: bebas-neue, sans-serif;
+    font-size: 1.6rem;
     padding: 1rem 0;
     font-weight: 700;
   }

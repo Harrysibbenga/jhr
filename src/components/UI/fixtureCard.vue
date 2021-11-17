@@ -1,8 +1,8 @@
 <template>
   <mdb-card>
     <mdb-card-image :src="fixture.head.url" :alt="fixture.head.alt" class="mx-auto cust-dim"></mdb-card-image>
-    <mdb-card-body>
-      <mdb-card-title class="h6">{{ fixture.latest.circuit.title }}</mdb-card-title>
+    <mdb-card-body class="text-center">
+      <mdb-card-title class="h4">{{ fixture.latest.circuit.title }}</mdb-card-title>
       <mdb-card-text>{{ fixture.latest.displayDate }}</mdb-card-text>
     </mdb-card-body>
     <div class="row position-relative">
